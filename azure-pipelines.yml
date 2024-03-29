@@ -21,13 +21,11 @@ steps:
 
     if [ $(docker ps -q -f name=^$CONTAINER_ID_OR_NAME$) ]; then
         docker stop $CONTAINER_ID_OR_NAME
+        docker rm $CONTAINER_ID_OR_NAME
     else
         echo "El contenedor $CONTAINER_ID_OR_NAME no está en ejecución."
     fi
-  displayName: 'Parar contenedores previos'
-
-- script: docker rm cont_srvqa
-  displayName: 'Eliminar contenedores previos'
+  displayName: 'Desechar contenedores previos'
 
 - script: docker run --name cont_srvqa -p 8081:8081 -e TZ=America/Bogota img_srvqa:latest
   displayName: 'Crear nuevo contenedor'
