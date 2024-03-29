@@ -1,0 +1,26 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- QA
+
+pool:
+  name: Default
+
+steps:
+- script: docker build -t "img_srvqa" .
+  displayName: 'Construir el artefacto'
+
+- script: docker stop cont_srvqa
+  displayName: 'Parar contenedores previos'
+
+- script: docker rm cont_srvqa
+  displayName: 'Eliminar contenedores previos'
+
+- script: docker run --name cont_srvqa -p 8081:8081 -e TZ=America/Bogota img_srvqa:latest
+  displayName: 'Crear nuevo contenedor'
+
+- script: docker start cont_srvqa
+  displayName: 'Iniciar el nuevo contenedor'
