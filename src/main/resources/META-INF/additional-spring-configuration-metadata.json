@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "addiis.app.version",
+    "type": "java.lang.String",
+    "description": "A description for 'addiis.app.version'"
+  },
+  {
+    "name": "addiis.app.nombre",
+    "type": "java.lang.String",
+    "description": "A description for 'addiis.app.nombre'"
+  },
+  {
+    "name": "addiis.app.descripcion",
+    "type": "java.lang.String",
+    "description": "A description for 'addiis.app.descripcion'"
+  },
+  {
+    "name": "addiis.app.pagina",
+    "type": "java.lang.String",
+    "description": "A description for 'addiis.app.pagina'"
+  }
+]}
