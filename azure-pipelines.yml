@@ -29,6 +29,3 @@ steps:
 
 - script: docker run --name cont_srvqa -d -p 8081:8081 -e TZ=America/Bogota img_srvqa:latest
   displayName: 'Crear nuevo contenedor'
-
-- script: docker start cont_srvqa
-  displayName: 'Iniciar el nuevo contenedor'
