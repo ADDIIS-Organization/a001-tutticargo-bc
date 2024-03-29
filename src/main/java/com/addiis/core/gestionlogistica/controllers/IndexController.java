@@ -1,6 +1,7 @@
 package com.addiis.core.gestionlogistica.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,23 +15,22 @@ public class IndexController {
 	
 	@Autowired
 	ParametrosService parametrosService;
+
+	@Value("${addiis.app.version}")
+	private String version;
+
+	@Value("${addiis.app.nombre}")
+	private String nombreApp;
 	
 	@GetMapping("/")
 	public String index() {
-		
-		ParametrosEntity entidad = new ParametrosEntity();
-		entidad.setParametro("Pruebas");
-		entidad.setNumero1(1);
-		
-		try {
-			float edad = 12/0;
-		}catch (Exception e) {
-			AddiisLogger.error("Hubo un error", this.getClass().getName(), 
-					Thread.currentThread().getStackTrace()[1].getMethodName(), e.getMessage());
-		}
-				
-		parametrosService.save(entidad);
-		return "Hola";
+
+
+
+		/*AddiisLogger.error("Hubo un error", this.getClass().getName(),
+					Thread.currentThread().getStackTrace()[1].getMethodName(), e.getMessage());*/
+
+		return "AppName= "+nombreApp+"<br>AppVersion="+version;
 	}
 
 }
