@@ -10,8 +10,11 @@ pool:
   name: Default
 
 steps:
+- script: mvn clean install
+  displayName: 'Construir el artefacto JAR'
+
 - script: docker build -t "img_srvqa" .
-  displayName: 'Construir el artefacto'
+  displayName: 'Construir la imagen'
 
 - script: docker stop cont_srvqa
   displayName: 'Parar contenedores previos'
