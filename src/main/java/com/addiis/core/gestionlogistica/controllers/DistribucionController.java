@@ -13,6 +13,7 @@ public class DistribucionController {
 
     @Autowired
     DistribucionService distribucionService;
+    @CrossOrigin(origins = "*")
     @GetMapping("/consultar")
     public ResponseEntity<ResponseConsultaMaterialDTO> consultaMaterial(
             @RequestParam(name = "sku") String sku
