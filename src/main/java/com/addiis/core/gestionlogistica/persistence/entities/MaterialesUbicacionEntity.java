@@ -28,7 +28,7 @@ public class MaterialesUbicacionEntity extends BaseEntity {
     @NotEmpty
     @ManyToOne
     @JoinColumn(name = "FKUBICAC")
-    private MaterialesEntity ubicacion;
+    private UbicacionesEntity ubicacion;
 
     @NotEmpty
     @Column(name = "NMCANTID")
