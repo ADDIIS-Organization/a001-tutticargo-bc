@@ -2,10 +2,11 @@ package com.addiis.core.gestionlogistica.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatusCode;
 
 @AllArgsConstructor
 @Data
-public class ResponseConsultaMaterialDTO {
+public class ResponseConsultaMaterialDTO{
     private String sku;
     private String descripcionProducto;
     private float cantidad;
