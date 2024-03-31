@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Optional;
 
@@ -34,14 +36,16 @@ public class DistribucionServiceImpl implements DistribucionService {
         if (sku == null){
             AddiisLogger.error("Consulta sin parámetro GET SKU", nombreClase,
                     nombreMetodo, null);
-            return null;
+            throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Debe ingresar el parámetro SKU");
         }
 
         Optional<MaterialesEntity> material = materialesService.findByCodigoMaterial(sku);
 
         if (material.isEmpty()){
             AddiisLogger.warn("Consulta por material sin resultados");
-            return null;
+            throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "No se retornaron reusltados de la consulta por material");
         }
 
         Optional<MaterialesUbicacionEntity> materialesUbicacion
@@ -49,7 +53,8 @@ public class DistribucionServiceImpl implements DistribucionService {
 
         if (materialesUbicacion.isEmpty()){
             AddiisLogger.warn("Consulta por material-ubicación sin resultados");
-            return null;
+            throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "No se retornaron reusltados de la consulta por material");
         }
 
         MaterialesUbicacionEntity resultados = materialesUbicacion.get();
@@ -58,4 +63,5 @@ public class DistribucionServiceImpl implements DistribucionService {
                 resultados.getCantidad(), resultados.getUbicacion().getCodigoUbicacion(),
                 resultados.getUbicacion().getSector(), resultados.getUbicacion().getEspacio());
     }
+    
 }
