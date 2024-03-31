@@ -19,13 +19,7 @@ public class DistribucionController {
     public ResponseEntity<ResponseConsultaMaterialDTO> consultaMaterial(
             @RequestParam(name = "sku") String sku
     ){
-        try {
-            return ResponseEntity.ok(distribucionService.consultaDistribucion(sku));
-        }catch (Exception ex){
-            AddiisLogger.error("Excepción no controlada", this.getClass().getName(),
-                    Thread.currentThread().getStackTrace()[1].getMethodName(), ex.getMessage());
-
-        }
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        AddiisLogger.info("Ejecución de controlador index");
+        return ResponseEntity.ok(distribucionService.consultaDistribucion(sku));
     }
 }
