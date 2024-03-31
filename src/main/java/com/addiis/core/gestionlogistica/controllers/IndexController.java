@@ -2,6 +2,7 @@ package com.addiis.core.gestionlogistica.controllers;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.services.IndexService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ public class IndexController {
 	@Autowired
 	private IndexService servicioIndex;
 
+	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/")
 	public ResponseEntity<String> index() {
 		try {

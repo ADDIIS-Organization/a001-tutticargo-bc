@@ -63,5 +63,5 @@ public class DistribucionServiceImpl implements DistribucionService {
                 resultados.getCantidad(), resultados.getUbicacion().getCodigoUbicacion(),
                 resultados.getUbicacion().getSector(), resultados.getUbicacion().getEspacio());
     }
-    
+
 }
