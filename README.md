@@ -1,5 +1,6 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+
+GestionLogistica is a project that aims to manage the logistics of any company from picking up the product to delivering it to the customer. This project is developed in Spring Boot. 
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
@@ -8,13 +9,43 @@ TODO: Guide users through getting your code up and running on their own system. 
 3.	Latest releases
 4.	API references
 
+1. Installation process
+
+To install the project, you must have the following tools installed:
+- Java 8
+- Maven
+- Git
+- JDK 17
+
+2. Software dependencies
+
+The project is developed in Spring Boot, so it is necessary to have the following dependencies:
+
+- Spring Boot
+- Spring Data JPA
+- Spring Web
+- Spring Security
+- Spring Boot DevTools
+- PostgreSQL
+
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+
+To build the project, you must clone the repository and run the following command:
+
+```bash
+mvn clean install
+```
+
+To run the project, you must run the following command:
+
+```bash
+mvn spring-boot:run
+```
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+If you want to contribute to the project, you must create a pull request with the changes you want to make.
+
+# License
+
+
