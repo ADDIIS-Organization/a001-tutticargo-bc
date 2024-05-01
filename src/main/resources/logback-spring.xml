@@ -18,7 +18,7 @@
 			<level>INFO</level>
 		</filter>
 		<http>
-			<url>http://loki:3100/loki/api/v1/push</url>
+			<url>http://172.17.0.4:3100/loki/api/v1/push</url>
 		</http>
 		<format>
 			<!-- (2) -->
