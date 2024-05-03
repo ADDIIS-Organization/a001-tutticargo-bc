@@ -7,7 +7,7 @@ trigger:
 - QA
 
 pool:
-  name: Default
+  name: Cloud Hetzner
 
 steps:
 - script: mvn clean install
