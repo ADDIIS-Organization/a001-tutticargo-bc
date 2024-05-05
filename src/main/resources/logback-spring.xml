@@ -38,7 +38,7 @@
 
 	<root level="INFO">
 		<appender-ref ref="ConsoleOutput" />
-		<appender-ref ref="LOKI" />
+		<!-- <appender-ref ref="LOKI" /> -->
 	</root>
 
 
