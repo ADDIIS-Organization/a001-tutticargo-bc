@@ -7,9 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class ErrorLogDTO {
-	private String claseError;
-	private String metodoError;
-	private String pilaTrazas;
-	private String mensaje;
-	
+	private String className;
+	private String method;
+	private String stackTrace;
+	private String message;
 }
