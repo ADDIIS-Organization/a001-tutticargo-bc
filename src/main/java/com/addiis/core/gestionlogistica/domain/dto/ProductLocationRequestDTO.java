@@ -5,6 +5,6 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class RequestConsultaMaterialDTO {
+public class ProductLocationRequestDTO {
     private String sku;
 }

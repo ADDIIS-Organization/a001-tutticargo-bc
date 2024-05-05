@@ -98,6 +98,13 @@
 			<version>1.4.1</version>
 		</dependency>
 
+		<dependency>
+    		<groupId>org.codehaus.janino</groupId>
+    		<artifactId>janino</artifactId>
+    		<version>3.1.6</version>
+		</dependency>
+
+
 		<!--Seguridad-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
