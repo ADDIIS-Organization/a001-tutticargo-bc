@@ -26,4 +26,9 @@ public class Constants {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    public enum ResponseType {
+        SUCCESS, 
+        ERROR
+    }
+
 }

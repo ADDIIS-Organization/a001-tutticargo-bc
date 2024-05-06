@@ -42,14 +42,14 @@ public class BaseEntity {
     @Column(name = "status")
     private int status = 1;
 
-    @PrePersist
-    protected void onCreate() {
+    @PrePersist // This annotation is used to specify a callback method that is called before the entity manager persist operation is actually executed or cascaded.
+    protected void onCreate() { // This method is called before the entity is persisted to the database in order to set the createdAt and updatedAt fields.
         createdAt = new Date();
         updatedAt = new Date();
     }
 
-    @PreUpdate
-    protected void onUpdate() {
+    @PreUpdate // This annotation is used to specify a callback method that is called before the database update operation is actually executed.
+    protected void onUpdate() {// This method is called before the entity is updated in the database in order to update the updatedAt field.
         updatedAt = new Date();
     }
 }

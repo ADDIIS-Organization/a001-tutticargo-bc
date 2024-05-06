@@ -40,8 +40,4 @@ public class ProductLocation extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "warehouse_location_id", referencedColumnName = "id")
     private WarehouseLocation warehouseLocation;
-
-    @NotEmpty
-    @Column(name = "quantity")
-    private float quantity;
 }
