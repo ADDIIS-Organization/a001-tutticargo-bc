@@ -14,6 +14,7 @@ public interface ProductLocationService {
 
     ProductLocationResponseDTO getByCode(String sku);
 
+
     // Optional<ProductLocation> findByUbicacion(WarehouseLocation ubicacionesEntity);
 
 }

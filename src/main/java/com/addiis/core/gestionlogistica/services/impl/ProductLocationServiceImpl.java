@@ -2,6 +2,7 @@ package com.addiis.core.gestionlogistica.services.impl;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
@@ -20,6 +21,7 @@ public class ProductLocationServiceImpl implements ProductLocationService {
     private final ProductService productService;
     private final ProductLocationRepository productLocationService;
 
+    @Autowired
     public ProductLocationServiceImpl(ProductService productService, ProductLocationRepository productLocationService) {
         this.productService = productService;
         this.productLocationService = productLocationService;
@@ -40,7 +42,6 @@ public class ProductLocationServiceImpl implements ProductLocationService {
         return new ProductLocationResponseDTO(
                 sku,
                 product.get().getDescription(),
-                productLocation.get().getQuantity(),
                 productLocation.get().getWarehouseLocation().getCode(),
                 productLocation.get().getWarehouseLocation().getSector(),
                 productLocation.get().getWarehouseLocation().getSpace());
