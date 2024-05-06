@@ -11,4 +11,6 @@ public interface ProductService {
     List<Product> findAll();
 
     Optional<Product> findByCode(String codigoMaterial);
+
+    Optional<Product> findById(Long id);
 }

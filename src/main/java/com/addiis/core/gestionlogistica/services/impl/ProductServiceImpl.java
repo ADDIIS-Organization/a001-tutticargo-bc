@@ -31,4 +31,9 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Product> findByCode(String codigoMaterial) {
         return productRepository.findByCode(codigoMaterial);
     }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return productRepository.findById(id);
+    }
 }

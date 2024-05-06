@@ -1,34 +1,33 @@
 package com.addiis.core.gestionlogistica.persistence.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name = "last_scanned_products")
 @Getter
 @Setter
-@Table(name = "last_scanned_products")
-public class LastScannedProduct extends BaseEntity {
+public class LastScannedProduct extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @NotEmpty
+    @NotNull
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @NotEmpty
+    @NotNull // Es mas adecuado usar @NotNull en lugar de @NotEmpty para campos de tipo LocalDate
     @Column(name = "expiration_date")
-    private Date expirationDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // Ensures the date is in YYYY-MM-DD format
+    private LocalDate expirationDate;
 
-
+    // Getters and setters
 }

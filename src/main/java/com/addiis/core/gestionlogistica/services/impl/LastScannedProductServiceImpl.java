@@ -20,17 +20,17 @@ public class LastScannedProductServiceImpl implements LastScannedProductService 
     }
 
     @Override
-    public void save(LastScannedProduct lastScannedProduct) {
+    public LastScannedProduct save(LastScannedProduct lastScannedProduct) {
         try {
-            lastScannedProductRepository.save(lastScannedProduct);
+            return lastScannedProductRepository.save(lastScannedProduct);
         } catch (DataAccessException e) {
             // Handle database-specific exceptions
-            AddiisLogger.error("Database error occurred", e.getClass().getName(), "save", e.getStackTrace().toString());
+            AddiisLogger.error("data access occurred", e.getClass().getName(), "save", e.getStackTrace().toString());
             throw new RuntimeException("Database error occurred: " + e.getMessage(), e);
         } catch (Exception e) {
             // Handle other generic exceptions
             AddiisLogger.error("Database error occurred", e.getClass().getName(), "save", e.getStackTrace().toString());
-            throw new RuntimeException("An error occurred: " + e.getMessage(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
