@@ -34,7 +34,7 @@ public class ApiResponseAspect {
             return ResponseEntity.status(responseEntity.getStatusCode()).body(apiResponse);
         } else {
             String errorMessage = responseBody instanceof String ? (String) responseBody : "Request failed";
-            ApiResponse<Object> apiError = ApiResponse.noStringError(errorMessage); // Wrap the plain error message
+            ApiResponse<Object> apiError = ApiResponse.error(errorMessage); // Wrap the plain error message
             return ResponseEntity.status(responseEntity.getStatusCode()).body(apiError);
         }
     }
