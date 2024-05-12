@@ -1,6 +1,13 @@
 package com.addiis.core.gestionlogistica.persistence.repositories;
 
+import org.springframework.data.domain.Pageable;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.addiis.core.gestionlogistica.persistence.entities.LastScannedProduct;
@@ -14,6 +21,5 @@ import com.addiis.core.gestionlogistica.persistence.entities.LastScannedProduct;
  */
 @Repository
 public interface LastScannedProductRepository extends JpaRepository<LastScannedProduct, Long> {
-
     
 }

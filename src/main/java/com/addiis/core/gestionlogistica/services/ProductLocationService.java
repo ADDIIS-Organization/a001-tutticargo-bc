@@ -2,19 +2,28 @@ package com.addiis.core.gestionlogistica.services;
 
 import com.addiis.core.gestionlogistica.domain.dto.ProductLocationResponseDTO;
 import com.addiis.core.gestionlogistica.persistence.entities.ProductLocation;
-import com.addiis.core.gestionlogistica.persistence.entities.WarehouseLocation;
 
-import java.util.List;
 import java.util.Optional;
 
+/**
+ * The ProductLocationService interface provides methods to retrieve product location information.
+ */
 public interface ProductLocationService {
-    // void save(ProductLocation productLocationEntity);
 
-    // List<ProductLocation> findAll();
+    /**
+     * Retrieves the product location information based on the SKU code.
+     *
+     * @param sku the SKU code of the product
+     * @return the ProductLocationResponseDTO containing the product location information
+     */
+    public ProductLocationResponseDTO getByCode(String sku);
 
-    ProductLocationResponseDTO getByCode(String sku);
-
-
-    // Optional<ProductLocation> findByUbicacion(WarehouseLocation ubicacionesEntity);
+    /**
+     * Retrieves the product location information based on the ID.
+     *
+     * @param id the ID of the product location
+     * @return an Optional containing the ProductLocation if found, otherwise empty
+     */
+    public Optional<ProductLocation> findById(Long id);
 
 }

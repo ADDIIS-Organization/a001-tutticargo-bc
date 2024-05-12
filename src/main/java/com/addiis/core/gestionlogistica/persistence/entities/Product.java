@@ -37,4 +37,7 @@ public class Product extends BaseEntity {
     @Size(max = 100)
     @Column(length = 100)
     private String description;
+
+    // @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    // private ProductLocation productLocation;
 }

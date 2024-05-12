@@ -1,10 +1,16 @@
 package com.addiis.core.gestionlogistica.services.impl;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
+import com.addiis.core.gestionlogistica.domain.dto.LastScannedProductResponseDTO;
 import com.addiis.core.gestionlogistica.persistence.entities.LastScannedProduct;
 import com.addiis.core.gestionlogistica.persistence.repositories.LastScannedProductRepository;
 import com.addiis.core.gestionlogistica.services.LastScannedProductService;
+import com.addiis.core.gestionlogistica.utils.enums.SortType;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -34,4 +40,8 @@ public class LastScannedProductServiceImpl implements LastScannedProductService 
         }
     }
 
+    @Override
+    public Page<LastScannedProduct> getAll(Pageable pageable) {
+        return lastScannedProductRepository.findAll(pageable);
+    }
 }

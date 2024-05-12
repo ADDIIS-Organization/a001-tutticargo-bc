@@ -21,8 +21,8 @@ public class LastScannedProduct extends BaseEntity{
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "product_location_id", referencedColumnName = "id")
+    private ProductLocation productLocation;
 
     @NotNull // Es mas adecuado usar @NotNull en lugar de @NotEmpty para campos de tipo LocalDate
     @Column(name = "expiration_date")

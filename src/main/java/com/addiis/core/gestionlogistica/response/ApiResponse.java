@@ -3,6 +3,9 @@ package com.addiis.core.gestionlogistica.response;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ApiResponse<T> {
     private boolean success;
     private String message;
@@ -21,6 +25,7 @@ public class ApiResponse<T> {
     private Map<String, Object> metadata = new HashMap<>();
     private Map<String, Object> links = new HashMap<>();
     private Map<String, Object> included = new HashMap<>();
+    private Map<String, Object> pageable = new HashMap<>();
 
     // Simplified constructors for common response patterns
     public ApiResponse(boolean success, String message) {
@@ -66,4 +71,5 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> okFull(T data, Map<String, Object> metadata, Map<String, Object> links, Map<String, Object> included) {
         return new ApiResponse<>(true, "Request successful", data, metadata, links, included);
     }
+
 }

@@ -2,6 +2,8 @@ package com.addiis.core.gestionlogistica.persistence.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
@@ -27,27 +29,34 @@ public class BaseEntity {
 
     @Size(max = 60)
     @Column(length = 60, name = "created_by")
+    @JsonIgnore
     private String createdBy;
 
     @Column(name = "created_at")
+    @JsonIgnore
     private Date createdAt;
 
     @Size(max = 60)
     @Column(length = 60, name = "updated_by")
+    @JsonIgnore
     private String updatedBy;
 
     @Column(name = "updated_at")
+    @JsonIgnore
     private Date updatedAt;
 
     @Column(name = "status")
+    @JsonIgnore
     private int status = 1;
 
+    @JsonIgnore
     @PrePersist // This annotation is used to specify a callback method that is called before the entity manager persist operation is actually executed or cascaded.
     protected void onCreate() { // This method is called before the entity is persisted to the database in order to set the createdAt and updatedAt fields.
         createdAt = new Date();
         updatedAt = new Date();
     }
 
+    @JsonIgnore
     @PreUpdate // This annotation is used to specify a callback method that is called before the database update operation is actually executed.
     protected void onUpdate() {// This method is called before the entity is updated in the database in order to update the updatedAt field.
         updatedAt = new Date();

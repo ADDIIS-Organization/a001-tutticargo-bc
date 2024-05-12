@@ -40,12 +40,18 @@ public class ProductLocationServiceImpl implements ProductLocationService {
         }
 
         return new ProductLocationResponseDTO(
+                productLocation.get().getId().toString(),
                 product.get().getId().toString(),
                 sku,
                 product.get().getDescription(),
                 productLocation.get().getWarehouseLocation().getCode(),
                 productLocation.get().getWarehouseLocation().getSector(),
                 productLocation.get().getWarehouseLocation().getSpace());
+    }
+
+    @Override
+    public Optional<ProductLocation> findById(Long id) {
+        return productLocationService.findById(id);
     }
 
 }
