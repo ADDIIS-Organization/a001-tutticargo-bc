@@ -8,6 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class ProductLocationResponseDTO{
+    private String productId;
     private String productCode;
     private String productDescription;
     private String locationCode;
