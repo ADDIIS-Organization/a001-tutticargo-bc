@@ -31,6 +31,8 @@ public class ProductLocation extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
+    private Double quantity;
+
     @NotEmpty
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")

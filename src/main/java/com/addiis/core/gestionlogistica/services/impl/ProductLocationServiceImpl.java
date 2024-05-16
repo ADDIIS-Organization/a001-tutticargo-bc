@@ -40,6 +40,7 @@ public class ProductLocationServiceImpl implements ProductLocationService {
         }
 
         return new ProductLocationResponseDTO(
+                productLocation.get().getQuantity(),
                 productLocation.get().getId().toString(),
                 product.get().getId().toString(),
                 sku,
