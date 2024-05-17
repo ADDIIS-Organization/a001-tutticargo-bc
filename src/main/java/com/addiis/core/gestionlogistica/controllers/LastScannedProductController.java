@@ -87,6 +87,7 @@ public class LastScannedProductController {
 
         LastScannedProduct lastScannedProduct = new LastScannedProduct();
         lastScannedProduct.setProductLocation(productLocation.get());
+        lastScannedProduct.setManufactureDate(request.getManufactureDate());
         lastScannedProduct.setExpirationDate(expirationDate);
         lastScannedProduct.setCreatedBy("nicolas.picon");
         lastScannedProduct.setUpdatedBy("nicolas.picon");
