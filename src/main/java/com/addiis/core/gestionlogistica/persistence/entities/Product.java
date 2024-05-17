@@ -34,6 +34,9 @@ public class Product extends BaseEntity {
     @Column(length = 60)
     private String code;
 
+    @Column(name = "ean")
+    private int ean;
+
     @Size(max = 100)
     @Column(length = 100)
     private String description;

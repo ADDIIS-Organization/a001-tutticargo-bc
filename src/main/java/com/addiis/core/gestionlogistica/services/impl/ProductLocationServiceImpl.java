@@ -27,23 +27,24 @@ public class ProductLocationServiceImpl implements ProductLocationService {
         this.productLocationService = productLocationService;
     }
 
-    public ProductLocationResponseDTO getByCode(String sku) {
-        Optional<Product> product = productService.findByCode(sku);
+    public ProductLocationResponseDTO getByEan(Integer ean) {
+        Optional<Product> product = productService.findByEan(ean);
         if (product.isEmpty()) {
-            throw new EntityNotFoundException("Product with SKU " + sku + " not found.");
+            throw new EntityNotFoundException("Product with ean " + ean + " not found.");
         }
         AddiisLogger.info("Product found: " + product.get().getDescription());
         Optional<ProductLocation> productLocation = productLocationService.findByProduct(product.get());
 
         if (productLocation.isEmpty()) {
-            throw new EntityNotFoundException("Location for product with SKU " + sku + " not found.");
+            throw new EntityNotFoundException("Location for product with ean " + ean + " not found.");
         }
 
         return new ProductLocationResponseDTO(
                 productLocation.get().getQuantity(),
                 productLocation.get().getId().toString(),
                 product.get().getId().toString(),
-                sku,
+                product.get().getCode(),
+                ean,
                 product.get().getDescription(),
                 productLocation.get().getWarehouseLocation().getCode(),
                 productLocation.get().getWarehouseLocation().getSector(),
