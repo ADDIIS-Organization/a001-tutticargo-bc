@@ -16,7 +16,7 @@ public interface ProductLocationService {
      * @param sku the SKU code of the product
      * @return the ProductLocationResponseDTO containing the product location information
      */
-    public ProductLocationResponseDTO getByCode(String sku);
+    public ProductLocationResponseDTO getByEan(Integer sku);
 
     /**
      * Retrieves the product location information based on the ID.

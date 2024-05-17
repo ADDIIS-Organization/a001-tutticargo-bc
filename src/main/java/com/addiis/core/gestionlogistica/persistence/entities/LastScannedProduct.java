@@ -29,5 +29,7 @@ public class LastScannedProduct extends BaseEntity{
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // Ensures the date is in YYYY-MM-DD format
     private LocalDate expirationDate;
 
-    // Getters and setters
+    @Column(name = "manufacture_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // Ensures the date is in YYYY-MM-DD format
+    private LocalDate manufactureDate;
 }

@@ -10,7 +10,7 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    Optional<Product> findByCode(String codigoMaterial);
+    Optional<Product> findByEan(Integer ean);
 
     Optional<Product> findById(Long id);
 }

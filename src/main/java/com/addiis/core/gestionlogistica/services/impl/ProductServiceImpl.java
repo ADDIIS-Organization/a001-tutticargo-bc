@@ -28,8 +28,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findByCode(String codigoMaterial) {
-        return productRepository.findByCode(codigoMaterial);
+    public Optional<Product> findByEan(Integer ean) {
+        return productRepository.findByEan(ean);
     }
 
     @Override

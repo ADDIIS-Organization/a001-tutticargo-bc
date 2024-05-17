@@ -29,15 +29,15 @@ public class ProductLocationController {
         this.productLocationService = productLocationService;
     }
 
-    @GetMapping("/{sku}")
+    @GetMapping("/{ean}")
     @ApiResponseWrapper
-    public ResponseEntity<?> getProductLocationBySku(@PathVariable String sku) {
-        AddiisLogger.info("Requesting product location for sku: " + sku);
-        if (sku == null || sku.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid SKU provided"); // Just return the message
+    public ResponseEntity<?> getProductLocationBySku(@PathVariable Integer ean) {
+        AddiisLogger.info("Requesting product location for ean: " + ean);
+        if (ean == null || ean.toString().length() <= 0) {
+            return ResponseEntity.badRequest().body("Invalid ean provided"); // Just return the message
         }
         try {
-            ProductLocationResponseDTO productLocation = productLocationService.getByCode(sku);
+            ProductLocationResponseDTO productLocation = productLocationService.getByEan(ean);
             return ResponseEntity.ok(productLocation);
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());

@@ -12,6 +12,7 @@ public class ProductLocationResponseDTO{
     private String id;
     private String productId;
     private String productCode;
+    private Integer ean;
     private String productDescription;
     private String locationCode;
     private String sector;
