@@ -1,7 +1,7 @@
 package com.addiis.core.gestionlogistica.services;
 
 import com.addiis.core.gestionlogistica.domain.dto.ProductLocationResponseDTO;
-import com.addiis.core.gestionlogistica.persistence.entities.ProductLocation;
+import com.addiis.core.gestionlogistica.persistence.entities.product.ProductLocation;
 
 import java.util.Optional;
 

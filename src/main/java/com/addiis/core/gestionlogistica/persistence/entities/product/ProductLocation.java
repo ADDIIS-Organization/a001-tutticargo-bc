@@ -1,4 +1,7 @@
-package com.addiis.core.gestionlogistica.persistence.entities;
+package com.addiis.core.gestionlogistica.persistence.entities.product;
+
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.warehouse.WarehouseLocation;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

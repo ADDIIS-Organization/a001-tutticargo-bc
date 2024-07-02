@@ -2,7 +2,7 @@ package com.addiis.core.gestionlogistica.services.impl;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.LastScannedProductResponseDTO;
-import com.addiis.core.gestionlogistica.persistence.entities.LastScannedProduct;
+import com.addiis.core.gestionlogistica.persistence.entities.product.LastScannedProduct;
 import com.addiis.core.gestionlogistica.persistence.repositories.LastScannedProductRepository;
 import com.addiis.core.gestionlogistica.services.LastScannedProductService;
 import com.addiis.core.gestionlogistica.utils.enums.SortType;

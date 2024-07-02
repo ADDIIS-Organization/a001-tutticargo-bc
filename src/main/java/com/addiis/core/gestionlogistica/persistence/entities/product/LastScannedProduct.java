@@ -1,10 +1,15 @@
-package com.addiis.core.gestionlogistica.persistence.entities;
+package com.addiis.core.gestionlogistica.persistence.entities.product;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -32,5 +37,5 @@ public class LastScannedProduct extends BaseEntity{
     @Column(name = "manufacture_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // Ensures the date is in YYYY-MM-DD format
     private LocalDate manufactureDate;
-}
 
+}

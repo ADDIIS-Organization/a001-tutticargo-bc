@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.addiis.core.gestionlogistica.persistence.entities.LastScannedProduct;
+import com.addiis.core.gestionlogistica.persistence.entities.product.LastScannedProduct;
 
 /**
  * Repository that allows to save the last scanned product.

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.addiis.core.gestionlogistica.persistence.entities.Product;
-import com.addiis.core.gestionlogistica.persistence.entities.ProductLocation;
+import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
+import com.addiis.core.gestionlogistica.persistence.entities.product.ProductLocation;
 
 @Repository
 public interface ProductLocationRepository extends JpaRepository<ProductLocation, Long>{

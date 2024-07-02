@@ -1,0 +1,56 @@
+package com.addiis.core.gestionlogistica.persistence.entities.product;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Set;
+
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Table(name="products")
+public class Product extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "name", length = 45)
+    private String name;
+
+    @Column(name = "code")
+    private Integer code;
+
+    @Column(name = "ean")
+    private Integer ean;
+
+    @Column(name = "uxc", length = 45)
+    private String uxc;
+
+    @Column(name = "cxp", length = 45)
+    private String cxp;
+
+    @Column(name = "observation", length = 45)
+    private String observation;
+
+    @ManyToOne
+    @JoinColumn(name = "product_types_id", referencedColumnName = "id")
+    private ProductType productType;
+
+    @ManyToOne
+    @JoinColumn(name = "units_of_measure_id", referencedColumnName = "id")
+    private UnitOfMeasure unitOfMeasure;
+
+    @OneToMany(mappedBy = "product")
+    private Set<ProductLocation> productLocations;
+
+    @ManyToMany(mappedBy = "products")
+    private Set<Order> orders;
+}
