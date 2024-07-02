@@ -1,7 +1,7 @@
 package com.addiis.core.gestionlogistica.services.impl;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
-import com.addiis.core.gestionlogistica.persistence.entities.Product;
+import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 import com.addiis.core.gestionlogistica.persistence.repositories.ProductRepository;
 import com.addiis.core.gestionlogistica.services.ProductService;
 

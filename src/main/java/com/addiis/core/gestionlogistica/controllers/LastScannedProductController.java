@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.LastScannedProductRequest;
-import com.addiis.core.gestionlogistica.persistence.entities.LastScannedProduct;
-import com.addiis.core.gestionlogistica.persistence.entities.Product;
-import com.addiis.core.gestionlogistica.persistence.entities.ProductLocation;
+import com.addiis.core.gestionlogistica.persistence.entities.product.LastScannedProduct;
+import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
+import com.addiis.core.gestionlogistica.persistence.entities.product.ProductLocation;
 import com.addiis.core.gestionlogistica.persistence.repositories.LastScannedProductRepository;
 import com.addiis.core.gestionlogistica.response.ApiResponse;
 import com.addiis.core.gestionlogistica.services.LastScannedProductService;

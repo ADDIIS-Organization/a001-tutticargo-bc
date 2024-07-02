@@ -57,3 +57,4 @@ public class WarehouseLocation extends BaseEntity {
     @Column(length = 40, name = "space")
     private String space;
 }
+

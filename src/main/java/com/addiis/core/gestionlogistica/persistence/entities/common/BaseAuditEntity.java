@@ -1,19 +1,21 @@
-package com.addiis.core.gestionlogistica.persistence.entities;
-
-import java.util.Date;
+package com.addiis.core.gestionlogistica.persistence.entities.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.Size;
+import jakarta.persistence.MappedSuperclass; // This annotation is used to specify that the class is an entity superclass and that it should not be mapped to a database table.
+
+
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
- * Base entity that contains the common fields for all entities.
+ * Base Audit entity that contains the common fields for all entities.
  * This entity contains the fields that are common to all entities, such as
  * the user who created and last updated the record, as well as the date and
  * time when the record was created and last updated.
@@ -25,8 +27,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseEntity {
-
+public class BaseAuditEntity {
+    
     @Size(max = 60)
     @Column(length = 60, name = "created_by")
     @JsonIgnore
@@ -44,10 +46,6 @@ public class BaseEntity {
     @Column(name = "updated_at")
     @JsonIgnore
     private Date updatedAt;
-
-    @Column(name = "status")
-    @JsonIgnore
-    private int status = 1;
 
     @JsonIgnore
     @PrePersist // This annotation is used to specify a callback method that is called before the entity manager persist operation is actually executed or cascaded.

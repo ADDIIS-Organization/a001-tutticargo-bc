@@ -1,7 +1,7 @@
 package com.addiis.core.gestionlogistica.services;
 
 import com.addiis.core.gestionlogistica.domain.dto.LastScannedProductResponseDTO;
-import com.addiis.core.gestionlogistica.persistence.entities.LastScannedProduct;
+import com.addiis.core.gestionlogistica.persistence.entities.product.LastScannedProduct;
 import com.addiis.core.gestionlogistica.utils.enums.SortType;
 
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,7 @@
-package com.addiis.core.gestionlogistica.persistence.entities;
+package com.addiis.core.gestionlogistica.persistence.entities.common;
 
 import java.util.Date;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

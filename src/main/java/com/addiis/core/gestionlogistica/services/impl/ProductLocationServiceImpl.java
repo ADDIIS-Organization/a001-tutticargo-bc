@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.ProductLocationResponseDTO;
-import com.addiis.core.gestionlogistica.persistence.entities.Product;
-import com.addiis.core.gestionlogistica.persistence.entities.ProductLocation;
+import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
+import com.addiis.core.gestionlogistica.persistence.entities.product.ProductLocation;
 import com.addiis.core.gestionlogistica.persistence.repositories.ProductLocationRepository;
 import com.addiis.core.gestionlogistica.services.ProductLocationService;
 import com.addiis.core.gestionlogistica.services.ProductService;
