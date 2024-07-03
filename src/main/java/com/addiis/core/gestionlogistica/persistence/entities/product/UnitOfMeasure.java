@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.util.Set;
 
-import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +14,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name="units_of_measure")
-public class UnitOfMeasure extends BaseEntity {
+public class UnitOfMeasure extends BaseStatusEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

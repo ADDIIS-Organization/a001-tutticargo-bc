@@ -32,12 +32,12 @@ public class Vehicle extends BaseAuditEntity {
     @Column(name = "observation", length = 150)
     private String observation;
 
-    @OneToMany(mappedBy = "vehicle")
-    private Set<Dispatch> dispatches;
-
     @ManyToOne
     @JoinColumn(name = "vehicles_types_id", referencedColumnName = "id")
     private VehicleType vehicleType;
+
+    @OneToMany(mappedBy = "vehicle")
+    private Set<Dispatch> dispatches;
 
     @OneToMany(mappedBy = "vehicle")
     private Set<VehicleHistory> vehicleHistories;

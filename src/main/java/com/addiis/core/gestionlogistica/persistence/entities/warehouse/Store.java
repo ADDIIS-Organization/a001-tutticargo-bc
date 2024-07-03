@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.util.Set;
 
-import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 
 @AllArgsConstructor
@@ -15,7 +15,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name="stores")
-public class Store extends BaseEntity{
+public class Store extends BaseStatusEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

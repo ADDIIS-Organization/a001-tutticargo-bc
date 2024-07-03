@@ -1,10 +1,10 @@
 package com.addiis.core.gestionlogistica.services.impl;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
-import com.addiis.core.gestionlogistica.domain.dto.LastScannedProductResponseDTO;
-import com.addiis.core.gestionlogistica.persistence.entities.product.LastScannedProduct;
-import com.addiis.core.gestionlogistica.persistence.repositories.LastScannedProductRepository;
-import com.addiis.core.gestionlogistica.services.LastScannedProductService;
+import com.addiis.core.gestionlogistica.domain.dto.ReceptionScannedProductResponseDTO;
+import com.addiis.core.gestionlogistica.persistence.entities.product.ReceptionScannedProduct;
+import com.addiis.core.gestionlogistica.persistence.repositories.ReceptionScannedProductRepository;
+import com.addiis.core.gestionlogistica.services.ReceptionScannedProductService;
 import com.addiis.core.gestionlogistica.utils.enums.SortType;
 
 import org.springframework.data.domain.Pageable;
@@ -16,19 +16,19 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LastScannedProductServiceImpl implements LastScannedProductService {
+public class ReceptionScannedProductServiceImpl implements ReceptionScannedProductService {
 
-    private final LastScannedProductRepository lastScannedProductRepository;
+    private final ReceptionScannedProductRepository ReceptionScannedProductRepository;
 
     @Autowired
-    public LastScannedProductServiceImpl(LastScannedProductRepository lastScannedProductRepository) {
-        this.lastScannedProductRepository = lastScannedProductRepository;
+    public ReceptionScannedProductServiceImpl(ReceptionScannedProductRepository ReceptionScannedProductRepository) {
+        this.ReceptionScannedProductRepository = ReceptionScannedProductRepository;
     }
 
     @Override
-    public LastScannedProduct save(LastScannedProduct lastScannedProduct) {
+    public ReceptionScannedProduct save(ReceptionScannedProduct ReceptionScannedProduct) {
         try {
-            return lastScannedProductRepository.save(lastScannedProduct);
+            return ReceptionScannedProductRepository.save(ReceptionScannedProduct);
         } catch (DataAccessException e) {
             // Handle database-specific exceptions
             AddiisLogger.error("data access occurred", e.getClass().getName(), "save", e.getStackTrace().toString());
@@ -41,7 +41,7 @@ public class LastScannedProductServiceImpl implements LastScannedProductService 
     }
 
     @Override
-    public Page<LastScannedProduct> getAll(Pageable pageable) {
-        return lastScannedProductRepository.findAll(pageable);
+    public Page<ReceptionScannedProduct> getAll(Pageable pageable) {
+        return ReceptionScannedProductRepository.findAll(pageable);
     }
 }

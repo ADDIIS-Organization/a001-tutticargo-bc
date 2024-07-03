@@ -1,14 +1,9 @@
 package com.addiis.core.gestionlogistica.persistence.entities.common;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseEntity extends BaseAuditEntity {
+public class BaseStatusEntity extends BaseAuditEntity {
     @Column(name = "status")
     @JsonIgnore
     private int status = 1;

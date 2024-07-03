@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.util.Set;
 
-import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +14,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name="cedi")
-public class Cedi extends BaseEntity{
+public class Cedi extends BaseStatusEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class Cedi extends BaseEntity{
 
     @Column(name = "name", length = 45)
     private String name;
-
+    
     @Column(name = "code")
     private Integer code;
 

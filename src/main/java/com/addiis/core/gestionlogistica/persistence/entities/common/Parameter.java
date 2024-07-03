@@ -29,7 +29,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "app_parameters", indexes = {@Index(columnList = "parameter_code")})
-public class Parameter extends BaseEntity {
+public class Parameter extends BaseStatusEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

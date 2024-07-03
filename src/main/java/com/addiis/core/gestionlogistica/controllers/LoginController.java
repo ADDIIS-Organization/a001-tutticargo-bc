@@ -21,7 +21,6 @@ public class LoginController {
         /**
          * TODO: Validar credenciales
          */
-
         String token = jwtAuthtenticationConfig.getJWTToken(request.getUser());
         return new UserDTO(request.getUser(), request.getPassword(),token);
 

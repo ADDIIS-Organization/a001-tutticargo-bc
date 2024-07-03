@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.util.Set;
 
-import com.addiis.core.gestionlogistica.persistence.entities.common.BaseEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 import com.addiis.core.gestionlogistica.persistence.entities.product.ReceptionScannedProduct;
 
@@ -16,7 +16,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.product.ReceptionSc
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name="warehouse_locations")
-public class WarehouseLocation extends BaseEntity {
+public class WarehouseLocation extends BaseStatusEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,6 @@ public class WarehouseLocation extends BaseEntity {
 
     @Column(name = "code")
     private Integer code;
-
-    @Column(name = "availability")
-    private Integer availability;
 
     @Column(name = "observation", length = 150)
     private String observation;

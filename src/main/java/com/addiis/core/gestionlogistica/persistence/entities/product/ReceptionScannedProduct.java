@@ -28,11 +28,6 @@ public class ReceptionScannedProduct extends BaseAuditEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "product_location_id", referencedColumnName = "id")
-    private ProductLocation productLocation;
-
     @NotNull // Es mas adecuado usar @NotNull en lugar de @NotEmpty para campos de tipo LocalDate
     @Column(name = "expiration_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // Ensures the date is in YYYY-MM-DD format

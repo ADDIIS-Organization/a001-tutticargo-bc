@@ -3,6 +3,7 @@ package com.addiis.core.gestionlogistica.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.addiis.core.gestionlogistica.domain.dto.ProductLocationResponseDTO;
 import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 
 public interface ProductService {
@@ -13,4 +14,6 @@ public interface ProductService {
     Optional<Product> findByEan(Integer ean);
 
     Optional<Product> findById(Long id);
+
+    ProductLocationResponseDTO getByEan(Integer ean);
 }

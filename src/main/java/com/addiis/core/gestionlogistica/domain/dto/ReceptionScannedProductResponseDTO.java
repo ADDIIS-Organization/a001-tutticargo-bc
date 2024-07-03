@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class LastScannedProductResponseDTO<T> {
+public class ReceptionScannedProductResponseDTO<T> {
     private List<T> content;
     private int totalElements;
     private int totalPages;
