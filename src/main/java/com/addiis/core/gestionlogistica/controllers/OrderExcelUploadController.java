@@ -63,6 +63,8 @@ public class OrderExcelUploadController {
             return ResponseEntity.badRequest().body("Please upload a valid file.");
         }
 
+        int insertedProductsCount = 0;
+
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0);
             AddiisLogger.info("eeeeeeeeeeeey" + sheet.getLastRowNum());
@@ -119,12 +121,14 @@ public class OrderExcelUploadController {
                     orderProduct.setProduct(product);
                     orderProduct.setQuantity(quantity);
                     orderProductRepository.save(orderProduct);
+
+                    insertedProductsCount++; // Incrementar contador de productos insertados
                 }
             }
 
-            return ApiResponse.ok("File processed successfully");
+            return ApiResponse.ok(insertedProductsCount + " products inserted");
         } catch (IOException e) {
-            return ResponseEntity.status(500).body("Error processing file: " + e.getMessage());
+            return ApiResponse.error("Error reading file: " + e.getMessage());
         }
     }
 
