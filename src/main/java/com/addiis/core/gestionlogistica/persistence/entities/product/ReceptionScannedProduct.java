@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseAuditEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.WarehouseLocation;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDate;
 
@@ -47,5 +48,6 @@ public class ReceptionScannedProduct extends BaseAuditEntity {
 
     @ManyToOne
     @JoinColumn(name = "warehouse_locations_id", referencedColumnName = "id")
+    @JsonBackReference
     private WarehouseLocation warehouseLocation;
 }

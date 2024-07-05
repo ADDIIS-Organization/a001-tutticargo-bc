@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,12 +45,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> findByEan(Integer ean) {
+    public Optional<Product> findByEan(BigInteger ean) {
         return productRepository.findByEan(ean);
     }
 
     @Override
-    public ProductLocationResponseDTO getByEan(Integer ean) {
+    public ProductLocationResponseDTO getByEan(BigInteger ean) {
         Optional<Product> product = this.findByEan(ean);
         if (product.isEmpty()) {
             throw new EntityNotFoundException("Product with ean " + ean + " not found.");
@@ -60,12 +61,13 @@ public class ProductServiceImpl implements ProductService {
         if (productWarehouseLocations.isEmpty()) {
             throw new EntityNotFoundException("Location for product with ean " + ean + " not found.");
         }
-// Convertir las ubicaciones a ProductLocationDTO
+        // Convertir las ubicaciones a ProductLocationDTO
         List<ProductLocationDTO> locationDTOs = productWarehouseLocations.stream()
                 .map(loc -> new ProductLocationDTO(
                         loc.getCode().toString(),
                         loc.getObservation(),
-                        "Some Space")) // Cambia "Some Space" con el valor correcto si está disponible en WarehouseLocation
+                        "Some Space")) // Cambia "Some Space" con el valor correcto si está disponible en
+                                       // WarehouseLocation
                 .collect(Collectors.toList());
 
         return new ProductLocationResponseDTO(

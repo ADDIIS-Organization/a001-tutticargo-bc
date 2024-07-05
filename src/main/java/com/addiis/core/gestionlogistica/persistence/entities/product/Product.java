@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
+import java.math.BigInteger;
 import java.util.List;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
@@ -28,10 +29,10 @@ public class Product extends BaseStatusEntity {
     private String name;
 
     @Column(name = "code")
-    private Integer code;
+    private BigInteger code;
 
     @Column(name = "ean")
-    private Integer ean;
+    private BigInteger ean;
 
     @Column(name = "uxc", length = 45)
     private String uxc;

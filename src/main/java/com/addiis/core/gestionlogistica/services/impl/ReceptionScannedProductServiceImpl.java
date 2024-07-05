@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReceptionScannedProductServiceImpl implements ReceptionScannedProductService {
 
-    private final ReceptionScannedProductRepository ReceptionScannedProductRepository;
+    private final ReceptionScannedProductRepository receptionScannedProductRepository;
 
     @Autowired
-    public ReceptionScannedProductServiceImpl(ReceptionScannedProductRepository ReceptionScannedProductRepository) {
-        this.ReceptionScannedProductRepository = ReceptionScannedProductRepository;
+    public ReceptionScannedProductServiceImpl(ReceptionScannedProductRepository receptionScannedProductRepository) {
+        this.receptionScannedProductRepository = receptionScannedProductRepository;
     }
 
     @Override
-    public ReceptionScannedProduct save(ReceptionScannedProduct ReceptionScannedProduct) {
+    public ReceptionScannedProduct save(ReceptionScannedProduct receptionScannedProduct) {
         try {
-            return ReceptionScannedProductRepository.save(ReceptionScannedProduct);
+            return receptionScannedProductRepository.save(receptionScannedProduct);
         } catch (DataAccessException e) {
             // Handle database-specific exceptions
             AddiisLogger.error("data access occurred", e.getClass().getName(), "save", e.getStackTrace().toString());
@@ -42,6 +42,19 @@ public class ReceptionScannedProductServiceImpl implements ReceptionScannedProdu
 
     @Override
     public Page<ReceptionScannedProduct> getAll(Pageable pageable) {
-        return ReceptionScannedProductRepository.findAll(pageable);
+        try {
+            Page<ReceptionScannedProduct> ReceptionScannedProducts = receptionScannedProductRepository.findAll(pageable);
+            AddiisLogger.info("from here");
+            AddiisLogger.info(ReceptionScannedProducts.toString());
+            return ReceptionScannedProducts;
+        } catch (DataAccessException e) {
+            // Handle database-specific exceptions
+            AddiisLogger.error("data access occurred", e.getClass().getName(), "getAll", e.getStackTrace().toString());
+            throw new RuntimeException("Database error occurred: " + e.getMessage(), e);
+        } catch (Exception e) {
+            // Handle other generic exceptions
+            AddiisLogger.error("Database error occurred", e.getClass().getName(), "getAll", e.getStackTrace().toString());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

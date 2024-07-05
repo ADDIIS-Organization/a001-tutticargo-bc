@@ -3,6 +3,7 @@ package com.addiis.core.gestionlogistica.persistence.entities.warehouse;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigInteger;
 import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
@@ -24,10 +25,10 @@ public class WarehouseLocation extends BaseStatusEntity {
     private Long id;
 
     @Column(name = "prefix")
-    private Integer prefix;
+    private BigInteger prefix;
 
     @Column(name = "code")
-    private Integer code;
+    private String code;
 
     @Column(name = "observation", length = 150)
     private String observation;

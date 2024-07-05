@@ -1,5 +1,6 @@
 package com.addiis.core.gestionlogistica.services;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +12,9 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    Optional<Product> findByEan(Integer ean);
+    Optional<Product> findByEan(BigInteger ean);
 
     Optional<Product> findById(Long id);
 
-    ProductLocationResponseDTO getByEan(Integer ean);
+    ProductLocationResponseDTO getByEan(BigInteger ean);
 }

@@ -1,5 +1,7 @@
 package com.addiis.core.gestionlogistica.controllers;
 
+import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class ProductController {
 
     @GetMapping("/{ean}")
     @ApiResponseWrapper
-    public ResponseEntity<?> getproductBySku(@PathVariable Integer ean) {
+    public ResponseEntity<?> getproductBySku(@PathVariable BigInteger ean) {
         AddiisLogger.info("Requesting product location for ean: " + ean);
         if (ean == null || ean.toString().length() <= 0) {
             return ResponseEntity.badRequest().body("Invalid ean provided"); // Just return the message

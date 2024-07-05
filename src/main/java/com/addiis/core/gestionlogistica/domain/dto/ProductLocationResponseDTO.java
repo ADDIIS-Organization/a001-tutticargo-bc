@@ -1,10 +1,9 @@
 package com.addiis.core.gestionlogistica.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @AllArgsConstructor
@@ -12,7 +11,7 @@ import java.util.List;
 public class ProductLocationResponseDTO{
     private String productId;
     private String productCode;
-    private Integer ean;
+    private BigInteger ean;
     private String productDescription;
     private List<ProductLocationDTO> locations; // Lista de ubicaciones
     private String cxp;
