@@ -6,8 +6,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseAuditEntity;

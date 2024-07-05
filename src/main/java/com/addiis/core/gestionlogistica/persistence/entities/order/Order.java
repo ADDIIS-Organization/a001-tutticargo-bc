@@ -3,6 +3,7 @@ package com.addiis.core.gestionlogistica.persistence.entities.order;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.Set;
 
@@ -25,10 +26,10 @@ public class Order {
     private Long id;
 
     @Column(name = "order_number")
-    private Integer orderNumber;
+    private BigInteger orderNumber;
 
     @Column(name = "detra")
-    private Integer detra;
+    private BigInteger detra;
 
     @Column(name = "petra")
     private Integer petra;
@@ -51,13 +52,8 @@ public class Order {
     private Set<OrderHistory> orderHistories;
 
     @OneToMany(mappedBy = "order")
-    private Set<OrderPallet> ordersPallets;
+    private Set<OrderProduct> ordersProducts;
 
-    @ManyToMany
-    @JoinTable(
-        name = "order_product",
-        joinColumns = @JoinColumn(name = "order_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private Set<Product> products;
+    @OneToMany(mappedBy = "order")
+    private Set<OrderPallet> ordersPallets;
 }

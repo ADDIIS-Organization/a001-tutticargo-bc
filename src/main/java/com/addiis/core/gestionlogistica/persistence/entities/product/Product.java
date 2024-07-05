@@ -3,12 +3,11 @@ package com.addiis.core.gestionlogistica.persistence.entities.product;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
 import java.math.BigInteger;
 import java.util.List;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
-import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
+import com.addiis.core.gestionlogistica.persistence.entities.order.OrderProduct;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.WarehouseLocation;
 
 @AllArgsConstructor
@@ -17,7 +16,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Warehouse
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name="products")
+@Table(name = "products")
 public class Product extends BaseStatusEntity {
 
     @Id
@@ -51,9 +50,9 @@ public class Product extends BaseStatusEntity {
     @JoinColumn(name = "units_of_measure_id", referencedColumnName = "id")
     private UnitOfMeasure unitOfMeasure;
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Order> orders;
-
     @OneToMany(mappedBy = "product")
     private List<WarehouseLocation> warehouseLocations;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderProduct> orderProducts;
 }
