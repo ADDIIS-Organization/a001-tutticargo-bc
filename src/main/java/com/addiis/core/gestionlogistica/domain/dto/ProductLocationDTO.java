@@ -6,6 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 public class ProductLocationDTO {
     private String locationCode;
-    private String sector;
-    private String space;
+    private String prefix;
+    // private String space;
 }

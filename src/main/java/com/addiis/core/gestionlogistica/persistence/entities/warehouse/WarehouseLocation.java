@@ -24,8 +24,8 @@ public class WarehouseLocation extends BaseStatusEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "prefix")
-    private BigInteger prefix;
+    @Column(name = "prefix", length = 40)
+    private String prefix;
 
     @Column(name = "code")
     private String code;

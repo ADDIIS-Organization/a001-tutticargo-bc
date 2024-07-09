@@ -39,7 +39,7 @@ public class Product extends BaseStatusEntity {
     @Column(name = "cxp", length = 45)
     private String cxp;
 
-    @Column(name = "observation", length = 45)
+    @Column(name = "observation", length = 100)
     private String observation;
 
     @ManyToOne

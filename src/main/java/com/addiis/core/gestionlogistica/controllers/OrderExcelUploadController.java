@@ -102,7 +102,7 @@ public class OrderExcelUploadController {
                     Product product = productOptional.get();
                     Store store = storeOptional.get();
 
-                    // Crear o actualizar Order
+                    // Crear Orden si no existe
                     Order order = orderRepository.findByOrderNumber(orderNumber);
                     if (order == null) {
                         order = new Order();
