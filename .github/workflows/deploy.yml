@@ -16,7 +16,7 @@ jobs:
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
-        distribution: 'temurin'  # Puedes cambiarlo a la distribución que prefieras
+        distribution: 'temurin'
         java-version: '17'
 
     - name: Build with Maven
@@ -43,6 +43,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
+          set -x  # Enable debugging
           ssh -i ~/.ssh/id_rsa -vvvv tutti_cargo_admin@5.161.189.5 << 'EOF'
             docker pull nicolaspicon98/a001-tutticargo-bc.git:latest
             CONTAINER_ID_OR_NAME="cont_srvqa"
