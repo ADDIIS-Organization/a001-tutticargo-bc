@@ -9,21 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: gestionlogistica
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U user"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -31,31 +16,20 @@ jobs:
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
-        distribution: 'temurin'
+        distribution: 'temurin'  # Puedes cambiarlo a la distribución que prefieras
         java-version: '17'
-
-    - name: Wait for PostgreSQL to be ready
-      run: |
-        for i in {1..30}; do
-          if pg_isready -h localhost -p 5432 -U user; then
-            echo "PostgreSQL is ready"
-            break
-          fi
-          echo "Waiting for PostgreSQL..."
-          sleep 1
-        done
 
     - name: Build with Maven
       run: mvn clean install
 
     - name: Build Docker image
-      run: docker build -t img_srvqa .
+      run: docker build -t nicolaspicon98/a001-tutticargo-bc.git .
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Push Docker image
-      run: docker push img_srvqa:latest
+      run: docker push nicolaspicon98/a001-tutticargo-bc.git:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -69,15 +43,15 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          docker pull img_srvqa:latest
+          docker pull nicolaspicon98/a001-tutticargo-bc.git:latest
           CONTAINER_ID_OR_NAME="cont_srvqa"
 
           if [ $(docker ps -q -f name=^$CONTAINER_ID_OR_NAME$) ]; then
               docker stop $CONTAINER_ID_OR_NAME
               docker rm $CONTAINER_ID_OR_NAME
-              docker rmi img_srvqa
+              docker rmi nicolaspicon98/a001-tutticargo-bc.git
           else
               echo "El contenedor $CONTAINER_ID_OR_NAME no está en ejecución."
           fi
 
-          docker run --name cont_srvqa -d -p 8081:8081 -e TZ=America/Bogota img_srvqa:latest
+          docker run --name cont_srvqa -d -p 8081:8081 -e TZ=America/Bogota nicolaspicon98/a001-tutticargo-bc.git:latest
