@@ -1,0 +1,32 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- QA
+
+pool:
+  name: Hetzner_tuti
+
+steps:
+- script: mvn clean install
+  displayName: 'Construir el artefacto JAR'
+
+- script: |
+    CONTAINER_ID_OR_NAME="cont_srvqa"
+
+    if [ $(docker ps -q -f name=^$CONTAINER_ID_OR_NAME$) ]; then
+        docker stop $CONTAINER_ID_OR_NAME
+        docker rm $CONTAINER_ID_OR_NAME
+        docker rmi img_srvqa
+    else
+        echo "El contenedor $CONTAINER_ID_OR_NAME no está en ejecución."
+    fi
+  displayName: 'Desechar contenedores previos'
+
+- script: docker build -t "img_srvqa" .
+  displayName: 'Construir la imagen'
+
+- script: docker run --name cont_srvqa -d -p 8081:8081 -e TZ=America/Bogota img_srvqa:latest
+  displayName: 'Crear nuevo contenedor'
