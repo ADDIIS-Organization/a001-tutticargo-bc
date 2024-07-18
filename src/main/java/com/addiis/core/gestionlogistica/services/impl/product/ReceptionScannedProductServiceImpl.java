@@ -1,4 +1,4 @@
-package com.addiis.core.gestionlogistica.services.impl;
+package com.addiis.core.gestionlogistica.services.impl.product;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.response.ReceptionScannedProductResponseDTO;
