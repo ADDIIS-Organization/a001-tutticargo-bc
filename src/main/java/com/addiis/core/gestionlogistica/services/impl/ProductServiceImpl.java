@@ -64,8 +64,8 @@ public class ProductServiceImpl implements ProductService {
         // Convertir las ubicaciones a ProductLocationDTO
         List<ProductLocationDTO> locationDTOs = productWarehouseLocations.stream()
                 .map(loc -> new ProductLocationDTO(
-                        loc.getCode().toString(),
-                        loc.getPrefix())) // Cambia "Some Space" con el valor correcto si está disponible en
+                        loc.getCodeSap().toString(),
+                        loc.getDispo())) // Cambia "Some Space" con el valor correcto si está disponible en
                                           // WarehouseLocation
                 .collect(Collectors.toList());
 
