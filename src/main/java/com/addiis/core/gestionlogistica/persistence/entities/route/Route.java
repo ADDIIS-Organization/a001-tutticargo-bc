@@ -8,6 +8,7 @@ import java.util.Set;
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseAuditEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
+import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +27,9 @@ public class Route extends BaseAuditEntity{
     @Column(name = "code")
     private Integer code;
 
+    @Column(name = "route_number")
+    private String routeNumber;
+
     @Column(name = "zones", length = 45)
     private String zones;
 
@@ -34,6 +38,9 @@ public class Route extends BaseAuditEntity{
 
     @Column(name = "observation", length = 45)
     private String observation;
+
+    @OneToMany(mappedBy = "route")
+    private Set<Store> stores;
 
     @ManyToOne
     @JoinColumn(name = "dispatches_id", referencedColumnName = "id")

@@ -52,8 +52,9 @@ public class Product extends BaseActiveEntity {
     @JoinColumn(name = "units_of_measure_id", referencedColumnName = "id")
     private UnitOfMeasure unitOfMeasure;
 
-    @OneToMany(mappedBy = "product")
-    private List<WarehouseLocation> warehouseLocations;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "warehouse_locations_id", referencedColumnName = "id")
+    private WarehouseLocation warehouseLocation;
 
     @OneToMany(mappedBy = "product")
     private List<OrderProduct> orderProducts;

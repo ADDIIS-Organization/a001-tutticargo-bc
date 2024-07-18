@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
+import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,6 +44,10 @@ public class Store extends BaseStatusEntity{
 
     @Column(name = "ruc")
     private Integer ruc;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    private Route route;
 
     @ManyToOne
     @JoinColumn(name = "zones_id", referencedColumnName = "id")

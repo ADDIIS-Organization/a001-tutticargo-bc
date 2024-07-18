@@ -33,8 +33,7 @@ public class WarehouseLocation extends BaseStatusEntity {
     @Column(name = "observation", length = 150)
     private String observation;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "warehouseLocation", cascade = CascadeType.ALL)
     private Product product;
 
     @OneToMany(mappedBy = "warehouseLocation")
