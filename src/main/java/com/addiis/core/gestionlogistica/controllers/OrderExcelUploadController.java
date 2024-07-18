@@ -9,7 +9,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderProductRepository;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderRepository;
-import com.addiis.core.gestionlogistica.persistence.repositories.ProductRepository;
+import com.addiis.core.gestionlogistica.persistence.repositories.products.ProductRepository;
 import com.addiis.core.gestionlogistica.persistence.repositories.warehouse.StoreRepository;
 import com.addiis.core.gestionlogistica.response.ApiResponse;
 
