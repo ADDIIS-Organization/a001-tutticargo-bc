@@ -1,0 +1,66 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'  # Puedes cambiarlo a la distribución que prefieras
+        java-version: '17'
+
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: Build Docker image
+      run: docker build -t nicolaspicon98/a001-tutticargo-bc.git .
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Push Docker image
+      run: docker push nicolaspicon98/a001-tutticargo-bc.git:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "Host *" > ~/.ssh/config
+        echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+        echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+
+    - name: SSH to Server
+      run: |
+        ssh -vvvv ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+          docker pull nicolaspicon98/a001-tutticargo-bc.git:latest
+          CONTAINER_ID_OR_NAME="cont_srvqa"
+
+          if [ $(docker ps -q -f name=^$CONTAINER_ID_OR_NAME$) ]; then
+              docker stop $CONTAINER_ID_OR_NAME
+              docker rm $CONTAINER_ID_OR_NAME
+              docker rmi nicolaspicon98/a001-tutticargo-bc.git
+          else
+              echo "El contenedor $CONTAINER_ID_OR_NAME no está en ejecución."
+          fi
+
+          docker run --name cont_srvqa -d -p 8081:8081 -e TZ=America/Bogota nicolaspicon98/a001-tutticargo-bc.git:latest
+        EOF
