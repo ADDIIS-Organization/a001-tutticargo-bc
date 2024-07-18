@@ -13,4 +13,5 @@ public class ReceptionScannedProductRequest {
     private Integer usefulLife; // Vida útil
     private Integer receptionPercentage; // Porcentaje de recepción
     private Long warehouseLocationId; // ID de la ubicación del producto en la bodega.
+    private String lot; // Lote
 }

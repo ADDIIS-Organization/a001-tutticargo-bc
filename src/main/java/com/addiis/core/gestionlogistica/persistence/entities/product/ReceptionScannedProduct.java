@@ -39,6 +39,9 @@ public class ReceptionScannedProduct extends BaseAuditEntity {
     @Column(name = "useful_life")
     private Integer usefulLife;
 
+    @Column(name = "lot")
+    private String lot;
+
     @Column(name = "reception_percentage")
     @Min(0)
     @Max(100)
@@ -48,4 +51,6 @@ public class ReceptionScannedProduct extends BaseAuditEntity {
     @JoinColumn(name = "warehouse_locations_id", referencedColumnName = "id")
     @JsonBackReference
     private WarehouseLocation warehouseLocation;
+
+    
 }

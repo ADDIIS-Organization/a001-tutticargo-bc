@@ -40,4 +40,10 @@ public class OrderPallet {
 
     @Column(name = "dispo_id")
     private Integer dispoId;
+
+    @Column(name = "big_palets")
+    private Integer bigPallets;
+
+    @Column(name = "little_palets")
+    private Integer littlePallets;
 }

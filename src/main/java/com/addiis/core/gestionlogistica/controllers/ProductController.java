@@ -31,7 +31,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/{sku}")
+    @GetMapping("/{ean}")
     @ApiResponseWrapper
     public ResponseEntity<?> getproductBySku(@PathVariable BigInteger ean) {
         AddiisLogger.info("Requesting product location for sku: " + ean);

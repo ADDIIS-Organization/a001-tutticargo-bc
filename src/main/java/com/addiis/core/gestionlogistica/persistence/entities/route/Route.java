@@ -6,6 +6,7 @@ import lombok.*;
 import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseAuditEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Channel;
 import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 
@@ -52,4 +53,8 @@ public class Route extends BaseAuditEntity{
 
     @OneToMany(mappedBy = "route")
     private Set<Order> orders;
+
+    @OneToOne()
+    @JoinColumn(name = "channels_id", referencedColumnName = "id")
+    private Channel channel;
 }

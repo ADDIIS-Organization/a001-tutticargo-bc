@@ -54,12 +54,14 @@ public class ReceptionScannedProductController {
 
         try {
             expirationDate = LocalDate.parse(request.getExpirationDate());
+            System.out.println("expirationDate: " + expirationDate);
         } catch (DateTimeParseException ex) {
             error.put("expirationDate", "Invalid expiration date format");
         }
 
         try {
             manufactureDate = LocalDate.parse(request.getManufactureDate());
+            System.out.println("manufactureDate: " + manufactureDate);
         } catch (DateTimeParseException ex) {
             error.put("manufactureDate", "Invalid manufacture date format");
         }
