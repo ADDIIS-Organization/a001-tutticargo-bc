@@ -2,6 +2,7 @@ package com.addiis.core.gestionlogistica.persistence.entities.dispatch;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseActiveEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
+import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,7 +33,7 @@ public class Channel  extends BaseActiveEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "number")
+    @Column(name = "number",nullable = true)
     private Integer number;
 
     @Column(name = "observation", length = 150)
@@ -43,5 +44,5 @@ public class Channel  extends BaseActiveEntity {
     private Platform platform;
 
     @OneToOne(mappedBy = "channel", cascade = CascadeType.ALL)
-    private Route route;
+    private Store route;
 }

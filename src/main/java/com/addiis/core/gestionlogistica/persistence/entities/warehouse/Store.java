@@ -6,6 +6,7 @@ import lombok.*;
 import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Channel;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
 
@@ -55,4 +56,8 @@ public class Store extends BaseStatusEntity {
 
     @OneToMany(mappedBy = "store")
     private Set<Order> orders;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "channel_id", referencedColumnName = "id" , nullable = true)
+    private Channel channel;
 }

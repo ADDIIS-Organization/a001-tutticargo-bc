@@ -9,6 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode
 @Entity
 @Table(name="orders_pallets")
@@ -23,8 +24,7 @@ public class OrderPallet {
     @JoinColumn(name = "orders_id", referencedColumnName = "id")
     private Order order;
 
-    @Column(name = "pallet_number")
-    private Integer palletNumber;
+   
 
     @Column(name = "total_pallets")
     private Integer totalPallets;
@@ -46,4 +46,5 @@ public class OrderPallet {
 
     @Column(name = "little_palets")
     private Integer littlePallets;
+
 }

@@ -41,6 +41,8 @@ public class ReceptionScannedProduct extends BaseAuditEntity {
 
     @Column(name = "lot")
     private String lot;
+    @Column(name = "amount_received")
+    private Integer amountReceived;
 
     @Column(name = "reception_percentage")
     @Min(0)
