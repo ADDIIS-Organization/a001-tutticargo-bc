@@ -11,7 +11,7 @@ public class OrderPalletMapper {
   public OrderPalletsResponse toResponse(OrderPallet entity) {
     return OrderPalletsResponse.builder()
             .id(entity.getId())
-            .totalPalets(entity.getTotalPalets())
+            .totalPalets(entity.getTotalPallets())
             .bigPallets(entity.getBigPallets())
             .littlePallets(entity.getLittlePallets())
             .build();
@@ -19,7 +19,7 @@ public class OrderPalletMapper {
 
   public OrderPallet toEntity(OrderPalletRequest request) {
     return OrderPallet.builder()
-            .totalPalets(request.getTotalPalets())
+            .totalPallets(request.getTotalPalets())
             .bigPallets(request.getBigPallets())
             .littlePallets(request.getLittlePallets())
             .build();
