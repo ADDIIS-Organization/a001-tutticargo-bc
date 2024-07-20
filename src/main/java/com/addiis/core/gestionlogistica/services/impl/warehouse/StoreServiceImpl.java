@@ -11,10 +11,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.addiis.core.gestionlogistica.domain.dto.request.StoreRequest;
+import com.addiis.core.gestionlogistica.domain.dto.response.CustomStoreResponse;
 import com.addiis.core.gestionlogistica.domain.dto.response.StoreResponse;
 import com.addiis.core.gestionlogistica.mappers.StoreMapper;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
-import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Zone;
 import com.addiis.core.gestionlogistica.persistence.repositories.warehouse.StoreRepository;
 import com.addiis.core.gestionlogistica.services.warehouse.StoreService;
 import com.addiis.core.gestionlogistica.utils.exceptions.IdNotFoundException;
@@ -33,7 +33,7 @@ public class StoreServiceImpl implements StoreService {
   @Autowired
   private final StoreRepository storeRepository;
 
-  public Page<StoreResponse> findAllCustom(int page, int size) {
+  public Page<CustomStoreResponse> findAllCustom(int page, int size) {
     Pageable pageable = PageRequest.of(page, size);
 
     String query = "SELECT s.id, s.name, s.code, s.address, s.city, s.observation, s.priority, s.ruc, " +
@@ -47,25 +47,26 @@ public class StoreServiceImpl implements StoreService {
         "LIMIT ? OFFSET ?";
 
     int offset = page * size;
-    List<StoreResponse> stores = jdbcTemplate.query(query, (rs, rowNum) -> new StoreResponse(
+    List<CustomStoreResponse> stores = jdbcTemplate.query(query, (rs, rowNum) -> new CustomStoreResponse(
         rs.getLong("id"),
         rs.getString("name"),
-        rs.getString("code"),
+        rs.getInt("code"),
         rs.getString("address"),
         rs.getString("city"),
         rs.getString("observation"),
-        rs.getInt("priority"),
+        rs.getString("priority"),
         rs.getString("ruc"),
         rs.getLong("route_id"),
         rs.getString("route_name"),
         rs.getLong("channel_id"),
         rs.getString("channel_name"),
         rs.getLong("platform_id"),
-        rs.getString("platform_name")), size, offset);
+        rs.getString("platform_name")
+        ), size, offset);
 
     long total = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM stores", Long.class);
 
-    return new PageImpl<StoreResponse>(stores, pageable, total);
+    return new PageImpl<CustomStoreResponse>(stores, pageable, total);
   }
 
   @Override

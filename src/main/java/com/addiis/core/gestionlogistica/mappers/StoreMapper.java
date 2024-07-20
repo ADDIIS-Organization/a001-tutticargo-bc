@@ -22,7 +22,7 @@ public class StoreMapper {
         .city(request.getCity())
         .observation(request.getObservation())
         .priority(request.getPriority())
-        .ruc(request.getRuc())
+        .ruc(request.getRuc().toString())
         .zone(zone)
         .build();
   }

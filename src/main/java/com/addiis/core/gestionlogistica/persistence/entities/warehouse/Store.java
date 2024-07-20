@@ -44,7 +44,7 @@ public class Store extends BaseStatusEntity {
     private String priority;
 
     @Column(name = "ruc")
-    private Integer ruc;
+    private String ruc;
 
     @ManyToOne
     @JoinColumn(name = "zones_id", referencedColumnName = "id")

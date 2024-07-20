@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.addiis.core.gestionlogistica.domain.dto.request.StoreRequest;
+import com.addiis.core.gestionlogistica.domain.dto.response.CustomStoreResponse;
 import com.addiis.core.gestionlogistica.domain.dto.response.StoreResponse;
 import com.addiis.core.gestionlogistica.services.warehouse.StoreService;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -39,9 +39,9 @@ public class StoreController {
   }
 
   @GetMapping("/custom")
-  public ResponseEntity<Page<StoreResponse>> findAllCustom(@RequestParam(defaultValue = "1") int page,
+  public ResponseEntity<Page<CustomStoreResponse>> findAllCustom(@RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-    Page<StoreResponse> response = storeService.findAllCustom(page - 1, size);
+    Page<CustomStoreResponse> response = storeService.findAllCustom(page - 1, size);
     return ResponseEntity.ok(response);
   }
 
