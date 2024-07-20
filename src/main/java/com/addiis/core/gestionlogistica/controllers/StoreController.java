@@ -38,6 +38,13 @@ public class StoreController {
     return ResponseEntity.ok(response);
   }
 
+  @GetMapping("/custom")
+  public ResponseEntity<Page<StoreResponse>> findAllCustom(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+    Page<StoreResponse> response = storeService.findAllCustom(page - 1, size);
+    return ResponseEntity.ok(response);
+  }
+
   @PostMapping
   public ResponseEntity<StoreResponse> create(@Validated @RequestBody StoreRequest request) {
 
