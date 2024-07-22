@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
@@ -109,7 +110,7 @@ public class OrderExcelUploadController {
                         order.setOrderNumber(orderNumber);
                         order.setDetra(detra);
                         order.setStore(store);
-                        order.setDate(new Date()); // Usar la fecha actual
+                        order.setDate((Timestamp) new Date()); // Usar la fecha actual
                         orderRepository.save(order);
                     }
 
