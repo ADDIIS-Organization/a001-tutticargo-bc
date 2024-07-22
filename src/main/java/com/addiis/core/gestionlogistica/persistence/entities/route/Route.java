@@ -51,9 +51,6 @@ public class Route extends BaseAuditEntity{
     @JoinColumn(name = "dispatches_id", referencedColumnName = "id")
     private Dispatch dispatch;
 
-    @OneToMany(mappedBy = "route")
-    private Set<Order> orders;
-
     @OneToOne()
     @JoinColumn(name = "channels_id", referencedColumnName = "id")
     private Channel channel;

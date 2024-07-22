@@ -35,10 +35,16 @@ public class OrderServiceImpl implements OrderService {
             page = 0;
         }
         PageRequest pageRequest = PageRequest.of(page, size);
-        return orderRepository.findAll(pageRequest).map(this::convertToOrderResponse);
-        // Page<Order> orders = orderRepository.findAll(pageRequest);
-        // AddiisLogger.info("Orders found: " + orders.getTotalElements());
-        // return orders.map(this::convertToOrderResponse);
+        AddiisLogger.info("pageRequest: " + pageRequest);
+        try {
+            Page<Order> orders = orderRepository.findAll(pageRequest);
+            AddiisLogger.info("Orders: " + orders);
+            return null;
+            // return orders.map(this::convertToOrderResponse);
+        } catch (Exception e) {
+            AddiisLogger.error("Error getting orders", this.getClass().getName(), "findAll", e.getMessage());
+            throw e;  // Rethrow the exception after logging it
+        }
     }
 
     private OrderResponse convertToOrderResponse(Order order) {

@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
-import java.sql.Timestamp; // Asegúrate de importar el tipo correcto
+import java.sql.Timestamp;
 import java.util.Set;
 
-import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 
 @AllArgsConstructor
@@ -24,28 +23,18 @@ public class Order {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "order_number")
-    private BigInteger orderNumber;
-
+    @Column(name = "date")
+    private Timestamp date;
+    
     @Column(name = "detra")
     private BigInteger detra;
 
-    @Column(name = "petra")
-    private Integer petra; // Asegúrate de que esta columna sea del tipo correcto en la base de datos.
-
-    @Column(name = "date")
-    private Timestamp date;
-
-    @Column(name = "priority", length = 45)
-    private String priority;
+    @Column(name = "order_number")
+    private BigInteger orderNumber;
 
     @ManyToOne
     @JoinColumn(name = "stores_id", referencedColumnName = "id")
     private Store store;
-
-    @ManyToOne
-    @JoinColumn(name = "routes_id", referencedColumnName = "id")
-    private Route route;
 
     @OneToMany(mappedBy = "order")
     private Set<OrderHistory> orderHistories;
@@ -53,6 +42,6 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private Set<OrderProduct> ordersProducts;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private Set<OrderPallet> ordersPallets;
 }

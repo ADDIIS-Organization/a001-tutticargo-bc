@@ -8,20 +8,20 @@ import com.addiis.core.gestionlogistica.persistence.entities.order.OrderPallet;
 
 @Component
 public class OrderPalletMapper {
-  public OrderPalletsResponse toResponse(OrderPallet entity) {
-    return OrderPalletsResponse.builder()
-            .id(entity.getId())
-            .totalPalets(entity.getTotalPallets())
-            .bigPallets(entity.getBigPallets())
-            .littlePallets(entity.getLittlePallets())
-            .build();
-  }
+  // public OrderPalletsResponse toResponse(OrderPallet entity) {
+  //   return OrderPalletsResponse.builder()
+  //           .id(entity.getId())
+  //           .totalPalets(entity.getTotalPallets())
+  //           .bigPallets(entity.getBigPallets())
+  //           .littlePallets(entity.getLittlePallets())
+  //           .build();
+  // }
 
-  public OrderPallet toEntity(OrderPalletRequest request) {
-    return OrderPallet.builder()
-            .totalPallets(request.getTotalPalets())
-            .bigPallets(request.getBigPallets())
-            .littlePallets(request.getLittlePallets())
-            .build();
-  }
+  // public OrderPallet toEntity(OrderPalletRequest request) {
+  //   return OrderPallet.builder()
+  //           .totalPallets(request.getTotalPalets())
+  //           .bigPallets(request.getBigPallets())
+  //           .littlePallets(request.getLittlePallets())
+  //           .build();
+  // }
 }
