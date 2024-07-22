@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode
 @Entity
-@Table(name="orders_pallets")
+@Table(name="order_pallet")
 public class OrderPallet {
 
     @Id
@@ -24,27 +24,25 @@ public class OrderPallet {
     @JoinColumn(name = "orders_id", referencedColumnName = "id")
     private Order order;
 
-   
-
-    @Column(name = "total_pallets")
-    private Integer totalPallets;
-
+    
     @Column(name = "picker_id")
     private Integer pickerId;
-
+    
     @Column(name = "checker_id")
     private Integer checkerId;
-
+    
     @Column(name = "date")
     private Date date;
-
+    
     @Column(name = "dispo_id")
     private Integer dispoId;
-
-    @Column(name = "big_palets")
+    
+    @Column(name = "big_pallets")
     private Integer bigPallets;
-
-    @Column(name = "little_palets")
+    
+    @Column(name = "little_pallets")
     private Integer littlePallets;
-
+    
+    @Column(name = "total_pallets")
+    private Integer totalPallets;
 }

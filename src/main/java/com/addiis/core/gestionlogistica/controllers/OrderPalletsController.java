@@ -25,7 +25,6 @@ public class OrderPalletsController {
  
   @PostMapping
   public ResponseEntity<OrderPalletsResponse> create(@RequestBody OrderPalletRequest request) {
-
     return ResponseEntity.status(HttpStatus.CREATED).body(orderPalletService.save(request));
   }
 

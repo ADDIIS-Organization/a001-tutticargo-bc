@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
-import java.util.Date;
+import java.sql.Timestamp; // Asegúrate de importar el tipo correcto
 import java.util.Set;
 
-import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 
@@ -32,10 +31,10 @@ public class Order {
     private BigInteger detra;
 
     @Column(name = "petra")
-    private Integer petra;
+    private Integer petra; // Asegúrate de que esta columna sea del tipo correcto en la base de datos.
 
     @Column(name = "date")
-    private Date date;
+    private Timestamp date;
 
     @Column(name = "priority", length = 45)
     private String priority;
