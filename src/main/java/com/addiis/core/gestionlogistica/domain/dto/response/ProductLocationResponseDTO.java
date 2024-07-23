@@ -18,4 +18,5 @@ public class ProductLocationResponseDTO{
     private List<ProductLocationDTO> locations; // Lista de ubicaciones
     private String cxp;
     private String uxc;
+    private Long warehouseLocationId;
 }

@@ -88,7 +88,9 @@ public class ProductServiceImpl implements ProductService {
                 product.get().getObservation(),
                 locationDTOs,
                 product.get().getCxp(),
-                product.get().getUxc());
+                product.get().getUxc(),
+                product.get().getWarehouseLocation().getId()
+                );
     }
 
     @Override
