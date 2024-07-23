@@ -49,6 +49,12 @@ public class ReceptionScannedProduct extends BaseAuditEntity {
     @Max(100)
     private Integer receptionPercentage;
 
+    @Column(name = "SKU")
+    private String SKU;
+
+    @Column(name = "description_product")
+    private String descriptionProduct;
+
     @ManyToOne
     @JoinColumn(name = "warehouse_locations_id", referencedColumnName = "id")
     @JsonBackReference

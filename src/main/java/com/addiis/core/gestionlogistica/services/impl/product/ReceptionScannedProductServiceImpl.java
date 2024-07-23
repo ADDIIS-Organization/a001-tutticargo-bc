@@ -11,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -41,12 +44,10 @@ public class ReceptionScannedProductServiceImpl implements ReceptionScannedProdu
     }
 
     @Override
-    public Page<ReceptionScannedProduct> getAll(Pageable pageable) {
+    public Page<ReceptionScannedProductResponseDTO> getAll(Pageable pageable) {
         try {
-            Page<ReceptionScannedProduct> ReceptionScannedProducts = receptionScannedProductRepository.findAll(pageable);
-            AddiisLogger.info("from here");
-            AddiisLogger.info(ReceptionScannedProducts.toString());
-            return ReceptionScannedProducts;
+            return receptionScannedProductRepository.findAll(pageable)
+                    .map(this::toReceptionScannedProductResponseDTO);
         } catch (DataAccessException e) {
             // Handle database-specific exceptions
             AddiisLogger.error("data access occurred", e.getClass().getName(), "getAll", e.getStackTrace().toString());
@@ -56,5 +57,20 @@ public class ReceptionScannedProductServiceImpl implements ReceptionScannedProdu
             AddiisLogger.error("Database error occurred", e.getClass().getName(), "getAll", e.getStackTrace().toString());
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    private ReceptionScannedProductResponseDTO toReceptionScannedProductResponseDTO(ReceptionScannedProduct receptionScannedProduct) {
+        return ReceptionScannedProductResponseDTO.builder()
+                .id(receptionScannedProduct.getId())
+                .expirationDate(receptionScannedProduct.getExpirationDate().toString())
+                .manufactureDate(receptionScannedProduct.getManufactureDate().toString())
+                .usefulLife(receptionScannedProduct.getUsefulLife())
+                .receptionPercentage(receptionScannedProduct.getReceptionPercentage())
+                .warehouseLocationId(receptionScannedProduct.getWarehouseLocation().getId())
+                .lot(receptionScannedProduct.getLot())
+                .amountReceived(receptionScannedProduct.getAmountReceived())
+                .SKU(receptionScannedProduct.getSKU())
+                .descriptionProduct(receptionScannedProduct.getDescriptionProduct())
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.addiis.core.gestionlogistica.controllers;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.request.ReceptionScannedProductRequest;
+import com.addiis.core.gestionlogistica.domain.dto.response.ReceptionScannedProductResponseDTO;
 import com.addiis.core.gestionlogistica.persistence.entities.product.ReceptionScannedProduct;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.WarehouseLocation;
 import com.addiis.core.gestionlogistica.response.ApiResponse;
@@ -41,7 +43,7 @@ public class ReceptionScannedProductController {
     }
 
     @GetMapping
-    public Object getAll(Pageable pageable) {
+    public ResponseEntity<Page<ReceptionScannedProductResponseDTO>> getAll(Pageable pageable) {
         return ResponseEntity.ok(receptionScannedProductService.getAll(pageable));
     }
 

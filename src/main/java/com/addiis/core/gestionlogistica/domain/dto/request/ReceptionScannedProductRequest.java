@@ -14,4 +14,7 @@ public class ReceptionScannedProductRequest {
     private Integer receptionPercentage; // Porcentaje de recepción
     private Long warehouseLocationId; // ID de la ubicación del producto en la bodega.
     private String lot; // Lote
+    private Integer amountReceived;
+    private String SKU;
+    private String descriptionProduct;
 }
