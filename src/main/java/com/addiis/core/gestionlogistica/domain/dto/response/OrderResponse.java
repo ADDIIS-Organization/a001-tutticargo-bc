@@ -12,7 +12,7 @@ public class OrderResponse {
     private BigInteger orderNumber;
     private Integer storeCode;
     private Integer routeCode;
-    private Integer channelNumber;
+    private String channelNumber;
     private String storeName;
     private Timestamp date;
     private Set<OrderPallet> ordersPallets;
@@ -21,7 +21,7 @@ public class OrderResponse {
     private Integer totalPalletsNumber;
 
     // Definir explícitamente el constructor
-    public OrderResponse(Long id, BigInteger orderNumber, Integer storeCode, Integer routeCode, Integer channelNumber, 
+    public OrderResponse(Long id, BigInteger orderNumber, Integer storeCode, Integer routeCode, String channelNumber, 
                          String storeName, Timestamp date, Set<OrderPallet> ordersPallets, 
                          Integer bigPallets, Integer littlePallets, Integer totalPalletsNumber) {
         this.id = id;

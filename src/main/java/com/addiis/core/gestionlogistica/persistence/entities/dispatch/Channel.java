@@ -34,7 +34,7 @@ public class Channel  extends BaseActiveEntity {
     private Long id;
 
     @Column(name = "number",nullable = true)
-    private Integer number;
+    private String number;
 
     @Column(name = "observation", length = 150)
     private String observation;

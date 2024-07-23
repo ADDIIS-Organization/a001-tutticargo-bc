@@ -39,8 +39,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             Page<Order> orders = orderRepository.findAll(pageRequest);
             AddiisLogger.info("Orders: " + orders);
-            return null;
-            // return orders.map(this::convertToOrderResponse);
+            return orders.map(this::convertToOrderResponse);
         } catch (Exception e) {
             AddiisLogger.error("Error getting orders", this.getClass().getName(), "findAll", e.getMessage());
             throw e;  // Rethrow the exception after logging it
@@ -55,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         }
         BigInteger orderNumber = order.getOrderNumber();
         Timestamp date = order.getDate();
-        Integer channelNumber = order.getStore().getChannel() != null ? order.getStore().getChannel().getNumber()
+        String channelNumber = order.getStore().getChannel() != null ? order.getStore().getChannel().getNumber()
                 : null;
         String storeName = order.getStore().getName();
         Set<OrderPallet> ordersPallets = order.getOrdersPallets();

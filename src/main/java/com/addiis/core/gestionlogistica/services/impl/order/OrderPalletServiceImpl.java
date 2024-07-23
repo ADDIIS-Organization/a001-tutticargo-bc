@@ -3,6 +3,7 @@ package com.addiis.core.gestionlogistica.services.impl.order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderPalletRequest;
 import com.addiis.core.gestionlogistica.domain.dto.request.PalletAttributes;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderPalletsResponse;
@@ -59,18 +60,22 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
       // Obtener la orden por su ID
       Order order = this.orderRepository.findById(orderId)
           .orElseThrow(() -> new IdNotFoundException("Order", orderId));
-      
       // Obtener todos los OrderPallets relacionados con la orden
       Set<OrderPallet> ordersPallets = order.getOrdersPallets();
-      
+      for (OrderPallet orderPallet : ordersPallets) {
+        AddiisLogger.info("OrderPallet from line 66: " + orderPallet);
+      }
+      for (PalletAttributes palletAttributes : request) {
+        AddiisLogger.info("PalletAttributes from line 69: " + palletAttributes.getDispoId());
+      }
       // Crear un set para los pallets actualizados o nuevos
       Set<OrderPallet> updatedPallets = new HashSet<>();
       
       // Iterar sobre los atributos de los pallets en la solicitud
       for (PalletAttributes palletAttributes : request) {
         Optional<OrderPallet> existingPalletOpt = ordersPallets.stream()
-            .filter(orderPallet -> orderPallet.getDispoId().equals(palletAttributes.getDispoId()))
-            .findFirst();
+        .filter(orderPallet -> orderPallet.getDispoId().equals(palletAttributes.getDispoId()))
+        .findFirst();
         
         if (existingPalletOpt.isPresent()) {
           // Actualizar el pallet existente
@@ -78,7 +83,9 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
           existingPallet.setBigPallets(palletAttributes.getBigPallets());
           existingPallet.setLittlePallets(palletAttributes.getLittlePallets());
           updatedPallets.add(existingPallet);
+          AddiisLogger.info("it got here from if");
         } else {
+          AddiisLogger.info("it got here from else");
           // Crear un nuevo pallet si no existe
           OrderPallet newPallet = new OrderPallet();
           newPallet.setOrder(order);
@@ -88,9 +95,14 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
           updatedPallets.add(newPallet);
         }
       }
+
+      // AddiisLogger.info("it got here right after conditions");
       
       // Guardar los pallets actualizados o nuevos
       List<OrderPallet> orderPalletsUpdated = orderPalletsRepository.saveAll(updatedPallets);
+      for (OrderPallet orderPallet : orderPalletsUpdated) {
+        AddiisLogger.info("OrderPallet: " + orderPallet);
+      }
   
       return new OrderPalletsResponse(orderPalletsUpdated);
   }

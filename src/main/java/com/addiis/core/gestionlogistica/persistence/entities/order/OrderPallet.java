@@ -24,7 +24,6 @@ public class OrderPallet {
     @JoinColumn(name = "orders_id", referencedColumnName = "id")
     private Order order;
 
-    
     @Column(name = "picker_id")
     private Integer pickerId;
     
