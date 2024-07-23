@@ -81,16 +81,27 @@ public class ProductServiceImpl implements ProductService {
                                           // WarehouseLocation
                 .collect(Collectors.toList());
 
-        return new ProductLocationResponseDTO(
-                product.get().getId().toString(),
-                product.get().getCode().toString(),
-                product.get().getEan(),
-                product.get().getObservation(),
-                locationDTOs,
-                product.get().getCxp(),
-                product.get().getUxc(),
-                product.get().getWarehouseLocation().getId()
-                );
+        // return new ProductLocationResponseDTO(
+        //         product.get().getId().toString(),
+        //         product.get().getCode().toString(),
+        //         product.get().getEan(),
+        //         product.get().getObservation(),
+        //         product.get().getName(),
+        //         locationDTOs,
+        //         product.get().getCxp(),
+        //         product.get().getUxc(),
+        //         product.get().getWarehouseLocation().getId()
+        //         );
+        return ProductLocationResponseDTO.builder()
+                .productId(product.get().getId().toString())
+                .productCode(product.get().getCode().toString())
+                .ean(product.get().getEan())
+                .name(product.get().getName())
+                .locations(locationDTOs)
+                .cxp(product.get().getCxp())
+                .uxc(product.get().getUxc())
+                .warehouseLocationId(product.get().getWarehouseLocation().getId())
+                .build();
     }
 
     @Override
