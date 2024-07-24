@@ -62,12 +62,6 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
           .orElseThrow(() -> new IdNotFoundException("Order", orderId));
       // Obtener todos los OrderPallets relacionados con la orden
       Set<OrderPallet> ordersPallets = order.getOrdersPallets();
-      for (OrderPallet orderPallet : ordersPallets) {
-        AddiisLogger.info("OrderPallet from line 66: " + orderPallet);
-      }
-      for (PalletAttributes palletAttributes : request) {
-        AddiisLogger.info("PalletAttributes from line 69: " + palletAttributes.getDispoId());
-      }
       // Crear un set para los pallets actualizados o nuevos
       Set<OrderPallet> updatedPallets = new HashSet<>();
       
@@ -83,9 +77,7 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
           existingPallet.setBigPallets(palletAttributes.getBigPallets());
           existingPallet.setLittlePallets(palletAttributes.getLittlePallets());
           updatedPallets.add(existingPallet);
-          AddiisLogger.info("it got here from if");
         } else {
-          AddiisLogger.info("it got here from else");
           // Crear un nuevo pallet si no existe
           OrderPallet newPallet = new OrderPallet();
           newPallet.setOrder(order);
@@ -101,7 +93,7 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
       // Guardar los pallets actualizados o nuevos
       List<OrderPallet> orderPalletsUpdated = orderPalletsRepository.saveAll(updatedPallets);
       for (OrderPallet orderPallet : orderPalletsUpdated) {
-        AddiisLogger.info("OrderPallet: " + orderPallet);
+        AddiisLogger.info("OrderPallet: " + orderPallet.getOrder().getId());
       }
   
       return new OrderPalletsResponse(orderPalletsUpdated);

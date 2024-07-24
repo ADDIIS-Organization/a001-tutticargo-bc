@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,5 +44,6 @@ public class Order {
     private Set<OrderProduct> ordersProducts;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<OrderPallet> ordersPallets;
 }

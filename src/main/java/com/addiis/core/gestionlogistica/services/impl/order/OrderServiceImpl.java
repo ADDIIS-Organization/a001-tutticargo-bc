@@ -58,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
                 : null;
         String storeName = order.getStore().getName();
         Set<OrderPallet> ordersPallets = order.getOrdersPallets();
+        AddiisLogger.info("ordersPallets: " + ordersPallets);
 
         // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío para
         // evitar NullPointerException
