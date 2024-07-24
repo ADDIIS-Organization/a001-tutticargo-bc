@@ -20,15 +20,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name="routes")
-public class Route extends BaseAuditEntity{
+@Table(name = "routes")
+public class Route extends BaseAuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,4 +53,6 @@ public class Route extends BaseAuditEntity{
     @OneToOne()
     @JoinColumn(name = "channels_id", referencedColumnName = "id")
     private Channel channel;
+    @Column(name = "route_number")
+    private String routeNumber;
 }

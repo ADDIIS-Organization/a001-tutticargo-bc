@@ -12,6 +12,7 @@ import com.addiis.core.gestionlogistica.domain.dto.request.OrderRequest;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderResponse;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderPallet;
+import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderRepository;
 import com.addiis.core.gestionlogistica.services.order.OrderService;
 
@@ -48,9 +49,10 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderResponse convertToOrderResponse(Order order) {
         Integer storeCode = order.getStore().getCode();
-        Integer routeCode = 0;
+        Route route = order.getStore().getRoute();
+        String routeName = null;
         if (order.getStore().getRoute() != null) {
-            routeCode = order.getStore().getRoute().getCode();
+            routeName = route.getRouteNumber();
         }
         BigInteger orderNumber = order.getOrderNumber();
         Timestamp date = order.getDate();
@@ -72,18 +74,31 @@ public class OrderServiceImpl implements OrderService {
                 : ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
         Integer totalPalletsNumber = bigPallets + littlePallets;
 
-        return new OrderResponse(
-                order.getId(),
-                orderNumber,
-                storeCode,
-                routeCode,
-                channelNumber,
-                storeName,
-                date,
-                ordersPallets,
-                bigPallets,
-                littlePallets,
-                totalPalletsNumber);
+        // return new OrderResponse(
+        //         order.getId(),
+        //         orderNumber,
+        //         storeCode,
+        //         routeName,
+        //         channelNumber,
+        //         storeName,
+        //         date,
+        //         ordersPallets,
+        //         bigPallets,
+        //         littlePallets,
+        //         totalPalletsNumber);
+        return OrderResponse.builder()
+                .id(order.getId())
+                .orderNumber(orderNumber)
+                .storeCode(storeCode)
+                .routeName(routeName)
+                .channelNumber(channelNumber)
+                .storeName(storeName)
+                .date(date)
+                .ordersPallets(ordersPallets)
+                .bigPallets(bigPallets)
+                .littlePallets(littlePallets)
+                .totalPalletsNumber(totalPalletsNumber)
+                .build();   
     }
 
     @Override
