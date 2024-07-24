@@ -85,25 +85,29 @@ public class ReceptionScannedProductController {
             return ApiResponse.errorWithDetails("Validation error", this.error);
         }
 
-        Optional<WarehouseLocation> productLocation = warehouseLocationService.findById(warehouseLocationId);
-        if (!productLocation.isPresent()) {
-            error.put("warehouseLocation", "Warehouse location not found");
-        }
+        Optional<WarehouseLocation> productLocation = warehouseLocationService.findById(request.getWarehouseLocationId());
 
         if (!error.isEmpty()) {
             AddiisLogger.error("Validation error", "ReceptionScannedProductController", "create", error.toString());
             return ApiResponse.errorWithDetails("Validation error", this.error);
         }
 
-        ReceptionScannedProduct receptionScannedProduct = new ReceptionScannedProduct();
-        receptionScannedProduct.setExpirationDate(expirationDate);
-        receptionScannedProduct.setManufactureDate(manufactureDate);
-        receptionScannedProduct.setUsefulLife(request.getUsefulLife());
-        receptionScannedProduct.setReceptionPercentage(request.getReceptionPercentage());
-        receptionScannedProduct.setWarehouseLocation(productLocation.get());
+        ReceptionScannedProductRequest receptionScannedProduct = ReceptionScannedProductRequest.builder()        
+                .expirationDate(expirationDate.toString())
+                .manufactureDate(manufactureDate.toString())
+                .usefulLife(request.getUsefulLife())
+                .receptionPercentage(request.getReceptionPercentage())
+                .warehouseLocationId(request.getWarehouseLocationId())
+                .lot(request.getLot())
+                .amountReceived(request.getAmountReceived())
+                .SKU(request.getSKU())
+                .descriptionProduct(request.getDescriptionProduct())
+                
+                .build();
+
 
         try {
-            ReceptionScannedProduct savedProduct = receptionScannedProductService.save(receptionScannedProduct);
+            ReceptionScannedProductResponseDTO savedProduct = receptionScannedProductService.save(receptionScannedProduct);
             return ApiResponse.ok(savedProduct);
         } catch (Exception ex) {
             AddiisLogger.error("Error saving last scanned product", "ReceptionScannedProductController", "create",

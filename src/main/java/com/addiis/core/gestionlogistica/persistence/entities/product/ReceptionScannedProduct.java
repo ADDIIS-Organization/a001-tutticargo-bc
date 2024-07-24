@@ -20,6 +20,7 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@Builder
 @Table(name="reception_scanned_products")
 public class ReceptionScannedProduct extends BaseAuditEntity {
 
