@@ -57,6 +57,12 @@ public class StoreController {
     return ResponseEntity.ok(response);
   }
 
+  @GetMapping("/custom/{code}")
+  public ResponseEntity<CustomStoreResponse> findCustomByCode(@PathVariable Long code) {
+      CustomStoreResponse response = storeService.findCustomByCode(code);
+      return ResponseEntity.ok(response);
+  }
+
   @PutMapping("/{id}")
   public ResponseEntity<StoreResponse> update(@Validated @RequestBody StoreRequest request,
             @PathVariable Long id) {

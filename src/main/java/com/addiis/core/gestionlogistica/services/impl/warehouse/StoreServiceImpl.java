@@ -3,6 +3,8 @@ package com.addiis.core.gestionlogistica.services.impl.warehouse;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -68,6 +70,46 @@ public class StoreServiceImpl implements StoreService {
 
     return new PageImpl<CustomStoreResponse>(stores, pageable, total);
   }
+@Override
+  public CustomStoreResponse findCustomByCode(Long code) {
+    try {
+        // Consulta SQL para obtener un único registro basado en code_sap
+        String query = "SELECT s.id, s.name, s.code, s.address, s.city, s.observation, s.priority, s.ruc, " +
+            "r.id AS route_id, r.route_number AS route_name, " +
+            "c.id AS channel_id, c.number AS channel_name, " +
+            "p.id AS platform_id, p.number AS platform_name " +
+            "FROM stores s " +
+            "LEFT JOIN routes r ON s.route_id = r.id " +
+            "LEFT JOIN channels c ON s.channel_id = c.id " +
+            "LEFT JOIN platforms p ON c.platform_id = p.id " +
+            "WHERE s.code = ?"; // Filtro por code_sap
+
+        // Ejecutar la consulta con el parámetro de búsqueda
+        return jdbcTemplate.queryForObject(query, (rs, rowNum) -> new CustomStoreResponse(
+            rs.getLong("id"),
+            rs.getString("name"),
+            rs.getInt("code"),
+            rs.getString("address"),
+            rs.getString("city"),
+            rs.getString("observation"),
+            rs.getString("priority"),
+            rs.getString("ruc"),
+            rs.getLong("route_id"),
+            rs.getString("route_name"),
+            rs.getLong("channel_id"),
+            rs.getString("channel_name"),
+            rs.getLong("platform_id"),
+            rs.getString("platform_name")
+            ), code);
+    } catch (EmptyResultDataAccessException e) {
+        // Manejar el caso cuando no se encuentra ningún registro
+        return null; // O lanzar una excepción personalizada, dependiendo de tu caso de uso
+    } catch (IncorrectResultSizeDataAccessException e) {
+        // Manejar el caso cuando se encuentran múltiples registros
+        throw new RuntimeException("Error: Se encontraron múltiples registros para code_sap: " + code);
+    }
+}
+
 
   @Override
   public StoreResponse create(StoreRequest request) {

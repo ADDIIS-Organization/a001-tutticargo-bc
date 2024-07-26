@@ -38,12 +38,13 @@ public class OrderServiceImpl implements OrderService {
         PageRequest pageRequest = PageRequest.of(page, size);
         AddiisLogger.info("pageRequest: " + pageRequest);
         try {
-            Page<Order> orders = orderRepository.findAll(pageRequest);
+            // Llamar al método del repositorio que ordena por routeNumber
+            Page<Order> orders = orderRepository.findAllOrderedByRoute(pageRequest);
             AddiisLogger.info("Orders: " + orders);
             return orders.map(this::convertToOrderResponse);
         } catch (Exception e) {
             AddiisLogger.error("Error getting orders", this.getClass().getName(), "findAll", e.getMessage());
-            throw e;  // Rethrow the exception after logging it
+            throw e; // Rethrow the exception after logging it
         }
     }
 
@@ -58,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
         Timestamp date = order.getDate();
         String channelNumber = order.getStore().getChannel() != null ? order.getStore().getChannel().getNumber()
                 : null;
+        String platformNumber = order.getStore().getChannel().getPlatform() != null ? order.getStore().getChannel().getPlatform().getNumber() : null;
         String storeName = order.getStore().getName();
         Set<OrderPallet> ordersPallets = order.getOrdersPallets();
         AddiisLogger.info("ordersPallets: " + ordersPallets);
@@ -98,6 +100,7 @@ public class OrderServiceImpl implements OrderService {
                 .bigPallets(bigPallets)
                 .littlePallets(littlePallets)
                 .totalPalletsNumber(totalPalletsNumber)
+                .platformNumber(platformNumber)
                 .build();   
     }
 

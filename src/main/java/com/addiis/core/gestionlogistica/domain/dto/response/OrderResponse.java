@@ -17,6 +17,7 @@ public class OrderResponse {
     private Integer routeCode;
     private String channelNumber;
     private String storeName;
+    private String platformNumber;
     private Timestamp date;
     private Set<OrderPallet> ordersPallets;
     private Integer bigPallets;
@@ -26,7 +27,7 @@ public class OrderResponse {
 
     // Definir explícitamente el constructor
     public OrderResponse(Long id, BigInteger orderNumber, Integer storeCode, Integer routeCode, String channelNumber, 
-                         String storeName, Timestamp date, Set<OrderPallet> ordersPallets, 
+                         String storeName,String platformNumber ,Timestamp date, Set<OrderPallet> ordersPallets, 
                          Integer bigPallets, Integer littlePallets, Integer totalPalletsNumber,String routeName) {
         this.id = id;
         this.orderNumber = orderNumber;
@@ -40,5 +41,6 @@ public class OrderResponse {
         this.littlePallets = littlePallets;
         this.totalPalletsNumber = totalPalletsNumber;
         this.routeName = routeName;
+        this.platformNumber = platformNumber;
     }
 }
