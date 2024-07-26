@@ -28,7 +28,8 @@ class WebSecurityConfig {
                         "/reception-scanned-products/**",
                         "/order-pallets/**",
                         "/orders/**",
-                        "/stores/**",   
+                        "/stores/**",
+                        "/vehicles/**",
                         // other public endpoints of your API may be appended to this array
         };
 
