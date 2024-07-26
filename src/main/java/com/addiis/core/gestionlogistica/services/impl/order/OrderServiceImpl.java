@@ -10,9 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderRequest;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderResponse;
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Channel;
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Platform;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderPallet;
 import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
+import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderRepository;
 import com.addiis.core.gestionlogistica.services.order.OrderService;
 
@@ -67,15 +70,20 @@ private OrderResponse convertToOrderResponse(Order order) {
     Integer storeCode = order.getStore().getCode();
     Route route = order.getStore().getRoute();
     String routeName = null;
-    if (order.getStore().getRoute() != null) {
+    if (route != null) {
         routeName = route.getRouteNumber();
     }
     BigInteger orderNumber = order.getOrderNumber();
     Timestamp date = order.getDate();
-    String channelNumber = order.getStore().getChannel() != null ? order.getStore().getChannel().getNumber()
-            : null;
-    String platformNumber = order.getStore().getChannel().getPlatform() != null ? order.getStore().getChannel().getPlatform().getNumber() : null;
-    String storeName = order.getStore().getName();
+    
+    // Obtener el canal y la plataforma de forma segura
+    Store store = order.getStore();
+    Channel channel = store != null ? store.getChannel() : null;
+    String channelNumber = channel != null ? channel.getNumber() : null;
+    Platform platform = channel != null ? channel.getPlatform() : null;
+    String platformNumber = platform != null ? platform.getNumber() : null;
+    
+    String storeName = store != null ? store.getName() : null;
     Set<OrderPallet> ordersPallets = order.getOrdersPallets();
     AddiisLogger.info("ordersPallets: " + ordersPallets);
 
@@ -113,6 +121,7 @@ private OrderResponse convertToOrderResponse(Order order) {
             .platformNumber(platformNumber)
             .build();
 }
+
 
     @Override
     public OrderResponse create(OrderRequest request) {
