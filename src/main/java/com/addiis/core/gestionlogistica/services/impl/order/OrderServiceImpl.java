@@ -21,7 +21,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -44,6 +46,17 @@ public class OrderServiceImpl implements OrderService {
             return orders.map(this::convertToOrderResponse);
         } catch (Exception e) {
             AddiisLogger.error("Error getting orders", this.getClass().getName(), "findAll", e.getMessage());
+            throw e; // Rethrow the exception after logging it
+        }
+    }
+
+    @Override
+    public List<OrderResponse> findByStoreCode(Integer storeCode) {
+        try{
+            return orderRepository.findByStoreCode(storeCode).stream().map(this::convertToOrderResponse).collect(Collectors.toList());
+        }
+        catch (Exception e) {
+            AddiisLogger.error("Error getting orders", this.getClass().getName(), "findByStoreCode", e.getMessage());
             throw e; // Rethrow the exception after logging it
         }
     }

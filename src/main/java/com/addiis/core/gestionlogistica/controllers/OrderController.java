@@ -54,4 +54,9 @@ public class OrderController {
         return ResponseEntity.ok(orderPalletService.updateByOrderId(request, orderId));
     }
 
+    @GetMapping("/{storeCode}")
+    public ResponseEntity<List<OrderResponse>> findByStoreCode(@PathVariable Integer storeCode) {
+        return ResponseEntity.ok(orderService.findByStoreCode(storeCode));
+    }
+
 }
