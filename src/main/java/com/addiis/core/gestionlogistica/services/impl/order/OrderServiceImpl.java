@@ -22,7 +22,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -61,61 +63,56 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private OrderResponse convertToOrderResponse(Order order) {
-        Integer storeCode = order.getStore().getCode();
-        Route route = order.getStore().getRoute();
-        String routeName = null;
-        if (order.getStore().getRoute() != null) {
-            routeName = route.getRouteNumber();
-        }
-        BigInteger orderNumber = order.getOrderNumber();
-        Timestamp date = order.getDate();
-        String channelNumber = order.getStore().getChannel() != null ? order.getStore().getChannel().getNumber()
-                : null;
-        String platformNumber = order.getStore().getChannel().getPlatform() != null ? order.getStore().getChannel().getPlatform().getNumber() : null;
-        String storeName = order.getStore().getName();
-        Set<OrderPallet> ordersPallets = order.getOrdersPallets();
-        AddiisLogger.info("ordersPallets: " + ordersPallets);
-
-        // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío para
-        // evitar NullPointerException
-        if (ordersPallets == null) {
-            ordersPallets = Collections.emptySet();
-        }
-
-        Integer bigPallets = ordersPallets.isEmpty() ? 0
-                : ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
-        Integer littlePallets = ordersPallets.isEmpty() ? 0
-                : ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
-        Integer totalPalletsNumber = bigPallets + littlePallets;
-
-        // return new OrderResponse(
-        //         order.getId(),
-        //         orderNumber,
-        //         storeCode,
-        //         routeName,
-        //         channelNumber,
-        //         storeName,
-        //         date,
-        //         ordersPallets,
-        //         bigPallets,
-        //         littlePallets,
-        //         totalPalletsNumber);
-        return OrderResponse.builder()
-                .id(order.getId())
-                .orderNumber(orderNumber)
-                .storeCode(storeCode)
-                .routeName(routeName)
-                .channelNumber(channelNumber)
-                .storeName(storeName)
-                .date(date)
-                .ordersPallets(ordersPallets)
-                .bigPallets(bigPallets)
-                .littlePallets(littlePallets)
-                .totalPalletsNumber(totalPalletsNumber)
-                .platformNumber(platformNumber)
-                .build();   
+private OrderResponse convertToOrderResponse(Order order) {
+    Integer storeCode = order.getStore().getCode();
+    Route route = order.getStore().getRoute();
+    String routeName = null;
+    if (order.getStore().getRoute() != null) {
+        routeName = route.getRouteNumber();
     }
+    BigInteger orderNumber = order.getOrderNumber();
+    Timestamp date = order.getDate();
+    String channelNumber = order.getStore().getChannel() != null ? order.getStore().getChannel().getNumber()
+            : null;
+    String platformNumber = order.getStore().getChannel().getPlatform() != null ? order.getStore().getChannel().getPlatform().getNumber() : null;
+    String storeName = order.getStore().getName();
+    Set<OrderPallet> ordersPallets = order.getOrdersPallets();
+    AddiisLogger.info("ordersPallets: " + ordersPallets);
+
+    // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío
+    if (ordersPallets == null || ordersPallets.isEmpty()) {
+        // Crear un array de pallets predeterminados
+        List<OrderPallet> defaultPallets = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            OrderPallet pallet = new OrderPallet();
+            pallet.setLittlePallets(0);
+            pallet.setBigPallets(0);
+            pallet.setDispoId(i);
+            defaultPallets.add(pallet);
+        }
+        ordersPallets = new HashSet<>(defaultPallets); // Convertir la lista a un conjunto
+    }
+
+    // Calcular bigPallets y littlePallets
+    Integer bigPallets = ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
+    Integer littlePallets = ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
+    Integer totalPalletsNumber = bigPallets + littlePallets;
+
+    return OrderResponse.builder()
+            .id(order.getId())
+            .orderNumber(orderNumber)
+            .storeCode(storeCode)
+            .routeName(routeName)
+            .channelNumber(channelNumber)
+            .storeName(storeName)
+            .date(date)
+            .ordersPallets(ordersPallets)
+            .bigPallets(bigPallets)
+            .littlePallets(littlePallets)
+            .totalPalletsNumber(totalPalletsNumber)
+            .platformNumber(platformNumber)
+            .build();
+}
 
     @Override
     public OrderResponse create(OrderRequest request) {
