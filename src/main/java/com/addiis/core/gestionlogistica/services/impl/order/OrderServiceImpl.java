@@ -57,71 +57,76 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResponse> findByStoreCode(Integer storeCode) {
-        try{
-            return orderRepository.findByStoreCode(storeCode).stream().map(this::convertToOrderResponse).collect(Collectors.toList());
-        }
-        catch (Exception e) {
+        try {
+            return orderRepository.findByStoreCode(storeCode).stream().map(this::convertToOrderResponse)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
             AddiisLogger.error("Error getting orders", this.getClass().getName(), "findByStoreCode", e.getMessage());
             throw e; // Rethrow the exception after logging it
         }
     }
 
-private OrderResponse convertToOrderResponse(Order order) {
-    Integer storeCode = order.getStore().getCode();
-    Route route = order.getStore().getRoute();
-    String routeName = null;
-    if (route != null) {
-        routeName = route.getRouteNumber();
-    }
-    BigInteger orderNumber = order.getOrderNumber();
-    Timestamp date = order.getDate();
-    
-    // Obtener el canal y la plataforma de forma segura
-    Store store = order.getStore();
-    Channel channel = store != null ? store.getChannel() : null;
-    String channelNumber = channel != null ? channel.getNumber() : null;
-    Platform platform = channel != null ? channel.getPlatform() : null;
-    String platformNumber = platform != null ? platform.getNumber() : null;
-    
-    String storeName = store != null ? store.getName() : null;
-    Set<OrderPallet> ordersPallets = order.getOrdersPallets();
-    AddiisLogger.info("ordersPallets: " + ordersPallets);
-
-    // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío
-    if (ordersPallets == null || ordersPallets.isEmpty()) {
-        // Crear un array de pallets predeterminados
-        List<OrderPallet> defaultPallets = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
-            OrderPallet pallet = new OrderPallet();
-            pallet.setLittlePallets(0);
-            pallet.setBigPallets(0);
-            pallet.setDispoId(i);
-            defaultPallets.add(pallet);
+    private OrderResponse convertToOrderResponse(Order order) {
+        Integer storeCode = order.getStore().getCode();
+        Route route = order.getStore().getRoute();
+        String routeName = null;
+        if (route != null) {
+            routeName = route.getRouteNumber();
         }
-        ordersPallets = new HashSet<>(defaultPallets); // Convertir la lista a un conjunto
+        BigInteger orderNumber = order.getOrderNumber();
+        Timestamp date = order.getDate();
+
+        // Obtener el canal y la plataforma de forma segura
+        Store store = order.getStore();
+        Channel channel = store != null ? store.getChannel() : null;
+        String channelNumber = channel != null ? channel.getNumber() : null;
+        Platform platform = channel != null ? channel.getPlatform() : null;
+        String platformNumber = platform != null ? platform.getNumber() : null;
+
+        String storeName = store != null ? store.getName() : null;
+        Set<OrderPallet> ordersPallets = order.getOrdersPallets();
+        AddiisLogger.info("ordersPallets: " + ordersPallets);
+
+        // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío
+        if (ordersPallets == null || ordersPallets.isEmpty()) {
+            // Crear un array de pallets predeterminados
+            List<OrderPallet> defaultPallets = new ArrayList<>();
+            for (int i = 1; i <= 13; i++) {
+                OrderPallet pallet = new OrderPallet();
+                pallet.setLittlePallets(0);
+                pallet.setBigPallets(0);
+                if (i == 13) {
+                    pallet.setDispoId("Agotados");
+                } else {
+
+                    pallet.setDispoId(String.valueOf(i));
+
+                }
+                  defaultPallets.add(pallet);
+            }
+            ordersPallets = new HashSet<>(defaultPallets); // Convertir la lista a un conjunto
+        }
+
+        // Calcular bigPallets y littlePallets
+        Integer bigPallets = ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
+        Integer littlePallets = ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
+        Integer totalPalletsNumber = bigPallets + littlePallets;
+
+        return OrderResponse.builder()
+                .id(order.getId())
+                .orderNumber(orderNumber)
+                .storeCode(storeCode)
+                .routeName(routeName)
+                .channelNumber(channelNumber)
+                .storeName(storeName)
+                .date(date)
+                .ordersPallets(ordersPallets)
+                .bigPallets(bigPallets)
+                .littlePallets(littlePallets)
+                .totalPalletsNumber(totalPalletsNumber)
+                .platformNumber(platformNumber)
+                .build();
     }
-
-    // Calcular bigPallets y littlePallets
-    Integer bigPallets = ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
-    Integer littlePallets = ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
-    Integer totalPalletsNumber = bigPallets + littlePallets;
-
-    return OrderResponse.builder()
-            .id(order.getId())
-            .orderNumber(orderNumber)
-            .storeCode(storeCode)
-            .routeName(routeName)
-            .channelNumber(channelNumber)
-            .storeName(storeName)
-            .date(date)
-            .ordersPallets(ordersPallets)
-            .bigPallets(bigPallets)
-            .littlePallets(littlePallets)
-            .totalPalletsNumber(totalPalletsNumber)
-            .platformNumber(platformNumber)
-            .build();
-}
-
 
     @Override
     public OrderResponse create(OrderRequest request) {

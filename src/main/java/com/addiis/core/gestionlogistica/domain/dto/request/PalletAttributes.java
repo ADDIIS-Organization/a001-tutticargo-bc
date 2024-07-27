@@ -14,5 +14,5 @@ import lombok.Setter;
 public class PalletAttributes {
   private Integer bigPallets;
   private Integer littlePallets;
-  private Integer dispoId;
+  private String dispoId;
 }

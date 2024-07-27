@@ -36,7 +36,7 @@ public class OrderPallet {
     private Date date;
 
     @Column(name = "dispo_id")
-    private Integer dispoId;
+    private String dispoId;
 
     @Column(name = "big_pallets")
     private Integer bigPallets;
