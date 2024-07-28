@@ -9,7 +9,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderProductRepository;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderRepository;
-import com.addiis.core.gestionlogistica.persistence.repositories.ProductRepository;
+import com.addiis.core.gestionlogistica.persistence.repositories.products.ProductRepository;
 import com.addiis.core.gestionlogistica.persistence.repositories.warehouse.StoreRepository;
 import com.addiis.core.gestionlogistica.response.ApiResponse;
 
@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
@@ -109,7 +110,7 @@ public class OrderExcelUploadController {
                         order.setOrderNumber(orderNumber);
                         order.setDetra(detra);
                         order.setStore(store);
-                        order.setDate(new Date()); // Usar la fecha actual
+                        order.setDate((Timestamp) new Date()); // Usar la fecha actual
                         orderRepository.save(order);
                     }
 

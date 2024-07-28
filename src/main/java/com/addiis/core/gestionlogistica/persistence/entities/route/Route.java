@@ -6,8 +6,19 @@ import lombok.*;
 import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseAuditEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Channel;
 import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +26,8 @@ import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name="routes")
-public class Route extends BaseAuditEntity{
+@Table(name = "routes")
+public class Route extends BaseAuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +50,9 @@ public class Route extends BaseAuditEntity{
     @JoinColumn(name = "dispatches_id", referencedColumnName = "id")
     private Dispatch dispatch;
 
-    @OneToMany(mappedBy = "route")
-    private Set<Order> orders;
+    @OneToOne()
+    @JoinColumn(name = "channels_id", referencedColumnName = "id")
+    private Channel channel;
+    @Column(name = "route_number")
+    private String routeNumber;
 }

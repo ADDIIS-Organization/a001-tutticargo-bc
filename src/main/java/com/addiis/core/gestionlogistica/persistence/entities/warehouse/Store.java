@@ -6,16 +6,19 @@ import lombok.*;
 import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Channel;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
+import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name="stores")
-public class Store extends BaseStatusEntity{
+@Table(name = "stores")
+public class Store extends BaseStatusEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,12 +44,20 @@ public class Store extends BaseStatusEntity{
     private String priority;
 
     @Column(name = "ruc")
-    private Integer ruc;
+    private String ruc;
 
     @ManyToOne
     @JoinColumn(name = "zones_id", referencedColumnName = "id")
     private Zone zone;
 
+    @ManyToOne
+    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    private Route route;
+
     @OneToMany(mappedBy = "store")
     private Set<Order> orders;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "channel_id", referencedColumnName = "id" , nullable = true)
+    private Channel channel;
 }

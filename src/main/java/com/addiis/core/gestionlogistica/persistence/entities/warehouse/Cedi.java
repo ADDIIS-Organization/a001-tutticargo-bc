@@ -11,6 +11,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEn
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name="cedi")

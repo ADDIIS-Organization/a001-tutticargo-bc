@@ -24,17 +24,16 @@ public class WarehouseLocation extends BaseStatusEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "prefix", length = 40)
-    private String prefix;
+    @Column(name = "dispo", length = 40)
+    private String dispo;
 
-    @Column(name = "code")
-    private String code;
+    @Column(name = "code_sap")
+    private String codeSap;
 
     @Column(name = "observation", length = 150)
     private String observation;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "warehouseLocation", cascade = CascadeType.ALL)
     private Product product;
 
     @OneToMany(mappedBy = "warehouseLocation")

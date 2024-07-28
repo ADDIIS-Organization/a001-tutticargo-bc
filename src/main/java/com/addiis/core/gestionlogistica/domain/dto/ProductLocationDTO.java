@@ -5,7 +5,8 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 public class ProductLocationDTO {
-    private String locationCode;
-    private String prefix;
+    private Long id;
+    private String ubicacion;
+    private String dispo;
     // private String space;
 }

@@ -20,6 +20,7 @@ import java.time.LocalDate;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@Builder
 @Table(name="reception_scanned_products")
 public class ReceptionScannedProduct extends BaseAuditEntity {
 
@@ -39,13 +40,26 @@ public class ReceptionScannedProduct extends BaseAuditEntity {
     @Column(name = "useful_life")
     private Integer usefulLife;
 
+    @Column(name = "lot")
+    private String lot;
+    @Column(name = "amount_received")
+    private Integer amountReceived;
+
     @Column(name = "reception_percentage")
     @Min(0)
     @Max(100)
     private Integer receptionPercentage;
 
+    @Column(name = "SKU")
+    private String SKU;
+
+    @Column(name = "description_product")
+    private String descriptionProduct;
+
     @ManyToOne
     @JoinColumn(name = "warehouse_locations_id", referencedColumnName = "id")
     @JsonBackReference
     private WarehouseLocation warehouseLocation;
+
+    
 }

@@ -1,8 +1,9 @@
 package com.addiis.core.gestionlogistica.controllers;
 
 import com.addiis.core.gestionlogistica.config.JWTAuthtenticationConfig;
-import com.addiis.core.gestionlogistica.domain.dto.LoginRequestDTO;
 import com.addiis.core.gestionlogistica.domain.dto.UserDTO;
+import com.addiis.core.gestionlogistica.domain.dto.request.LoginRequestDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

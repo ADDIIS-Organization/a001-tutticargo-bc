@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigInteger;
 import java.util.List;
 
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseActiveEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderProduct;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.WarehouseLocation;
@@ -14,10 +15,11 @@ import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Warehouse
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "products")
-public class Product extends BaseStatusEntity {
+public class Product extends BaseActiveEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,8 +52,9 @@ public class Product extends BaseStatusEntity {
     @JoinColumn(name = "units_of_measure_id", referencedColumnName = "id")
     private UnitOfMeasure unitOfMeasure;
 
-    @OneToMany(mappedBy = "product")
-    private List<WarehouseLocation> warehouseLocations;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "warehouse_locations_id", referencedColumnName = "id")
+    private WarehouseLocation warehouseLocation;
 
     @OneToMany(mappedBy = "product")
     private List<OrderProduct> orderProducts;

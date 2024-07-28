@@ -16,6 +16,7 @@ jobs:
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
+        distribution: 'temurin'  # Puedes cambiarlo a la distribución que prefieras
         java-version: '17'
 
     - name: Build with Maven
@@ -35,13 +36,21 @@ jobs:
     needs: build
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        echo "Host *" > ~/.ssh/config
+        echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+        echo "  IdentityFile ~/.ssh/id_rsa" >> ~/.ssh/config
+
     - name: SSH to Server
-      uses: appleboy/ssh-action@v0.1.3
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SERVER_SSH_KEY }}
-        script: |
+      run: |
+        ssh -vvvv ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
           docker pull nicolaspicon98/a001-tutticargo-bc.git:latest
           CONTAINER_ID_OR_NAME="cont_srvqa"
 
@@ -54,3 +63,4 @@ jobs:
           fi
 
           docker run --name cont_srvqa -d -p 8081:8081 -e TZ=America/Bogota nicolaspicon98/a001-tutticargo-bc.git:latest
+        EOF

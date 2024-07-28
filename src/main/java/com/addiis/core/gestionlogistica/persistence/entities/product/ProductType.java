@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.Set;
 
+import com.addiis.core.gestionlogistica.persistence.entities.common.BaseActiveEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEntity;
 
 @AllArgsConstructor
@@ -14,7 +15,8 @@ import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEn
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "product_types")
-public class ProductType extends BaseStatusEntity {
+@Builder
+public class ProductType extends BaseActiveEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
