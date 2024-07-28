@@ -1,5 +1,7 @@
 package com.addiis.core.gestionlogistica.persistence.entities.dispatch;
 
+import java.util.Set;
+
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseActiveEntity;
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseAuditEntity;
 
@@ -20,8 +22,11 @@ public class Platform extends BaseActiveEntity {
     private Long id;
 
     @Column(name = "number")
-    private Integer number;
+    private String number;
 
     @Column(name = "observation", length = 150)
     private String observation;
+
+    @OneToMany(mappedBy = "platform")
+    private Set<Channel> channels;
 }

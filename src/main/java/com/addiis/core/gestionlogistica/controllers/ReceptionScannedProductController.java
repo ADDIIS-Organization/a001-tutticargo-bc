@@ -1,5 +1,6 @@
 package com.addiis.core.gestionlogistica.controllers;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
-import com.addiis.core.gestionlogistica.domain.dto.ReceptionScannedProductRequest;
+import com.addiis.core.gestionlogistica.domain.dto.request.ReceptionScannedProductRequest;
+import com.addiis.core.gestionlogistica.domain.dto.response.ReceptionScannedProductResponseDTO;
 import com.addiis.core.gestionlogistica.persistence.entities.product.ReceptionScannedProduct;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.WarehouseLocation;
 import com.addiis.core.gestionlogistica.response.ApiResponse;
 import com.addiis.core.gestionlogistica.services.ReceptionScannedProductService;
-import com.addiis.core.gestionlogistica.services.WarehouseLocationService;
+import com.addiis.core.gestionlogistica.services.warehouse.WarehouseLocationService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -41,7 +43,7 @@ public class ReceptionScannedProductController {
     }
 
     @GetMapping
-    public Object getAll(Pageable pageable) {
+    public ResponseEntity<Page<ReceptionScannedProductResponseDTO>> getAll(Pageable pageable) {
         return ResponseEntity.ok(receptionScannedProductService.getAll(pageable));
     }
 
@@ -54,12 +56,14 @@ public class ReceptionScannedProductController {
 
         try {
             expirationDate = LocalDate.parse(request.getExpirationDate());
+            System.out.println("expirationDate: " + expirationDate);
         } catch (DateTimeParseException ex) {
             error.put("expirationDate", "Invalid expiration date format");
         }
 
         try {
             manufactureDate = LocalDate.parse(request.getManufactureDate());
+            System.out.println("manufactureDate: " + manufactureDate);
         } catch (DateTimeParseException ex) {
             error.put("manufactureDate", "Invalid manufacture date format");
         }
@@ -81,25 +85,29 @@ public class ReceptionScannedProductController {
             return ApiResponse.errorWithDetails("Validation error", this.error);
         }
 
-        Optional<WarehouseLocation> productLocation = warehouseLocationService.findById(warehouseLocationId);
-        if (!productLocation.isPresent()) {
-            error.put("warehouseLocation", "Warehouse location not found");
-        }
+        Optional<WarehouseLocation> productLocation = warehouseLocationService.findById(request.getWarehouseLocationId());
 
         if (!error.isEmpty()) {
             AddiisLogger.error("Validation error", "ReceptionScannedProductController", "create", error.toString());
             return ApiResponse.errorWithDetails("Validation error", this.error);
         }
 
-        ReceptionScannedProduct receptionScannedProduct = new ReceptionScannedProduct();
-        receptionScannedProduct.setExpirationDate(expirationDate);
-        receptionScannedProduct.setManufactureDate(manufactureDate);
-        receptionScannedProduct.setUsefulLife(request.getUsefulLife());
-        receptionScannedProduct.setReceptionPercentage(request.getReceptionPercentage());
-        receptionScannedProduct.setWarehouseLocation(productLocation.get());
+        ReceptionScannedProductRequest receptionScannedProduct = ReceptionScannedProductRequest.builder()        
+                .expirationDate(expirationDate.toString())
+                .manufactureDate(manufactureDate.toString())
+                .usefulLife(request.getUsefulLife())
+                .receptionPercentage(request.getReceptionPercentage())
+                .warehouseLocationId(request.getWarehouseLocationId())
+                .lot(request.getLot())
+                .amountReceived(request.getAmountReceived())
+                .SKU(request.getSKU())
+                .descriptionProduct(request.getDescriptionProduct())
+                
+                .build();
+
 
         try {
-            ReceptionScannedProduct savedProduct = receptionScannedProductService.save(receptionScannedProduct);
+            ReceptionScannedProductResponseDTO savedProduct = receptionScannedProductService.save(receptionScannedProduct);
             return ApiResponse.ok(savedProduct);
         } catch (Exception ex) {
             AddiisLogger.error("Error saving last scanned product", "ReceptionScannedProductController", "create",

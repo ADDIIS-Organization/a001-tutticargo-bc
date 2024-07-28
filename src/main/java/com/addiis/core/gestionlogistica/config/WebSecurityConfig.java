@@ -9,34 +9,51 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @Configuration
-class WebSecurityConfig{
+class WebSecurityConfig {
 
-    @Autowired
-    JWTAuthorizationFilter jwtAuthorizationFilter;
+        @Autowired
+        JWTAuthorizationFilter jwtAuthorizationFilter;
 
-    private static final String[] AUTH_WHITELIST = {
+        private static final String[] AUTH_WHITELIST = {
 
-            // -- Swagger UI v3 (OpenAPI)
-            "/api-docs/**",
-            "/swagger-ui/**",
-            "/"
-            // other public endpoints of your API may be appended to this array
-    };
+                        // -- Swagger UI v3 (OpenAPI)
+                        "/api-docs/**",
+                        "/swagger-ui/**",
+                        "/products/**",
+                        "/reception-scanned-products/**",
+                        "/order-pallets/**",
+                        "/orders/**",
+                        "/stores/**",
+                        "/vehicles/**",
+                        // other public endpoints of your API may be appended to this array
+        };
 
-    @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        @Bean
+        public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests( authz -> authz
-                        .requestMatchers(HttpMethod.POST,Constants.LOGIN_URL).permitAll()
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
-                        .anyRequest().authenticated())
-                .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                http
+                                .csrf(AbstractHttpConfigurer::disable)
+                                .authorizeHttpRequests(authz -> authz
+                                                .requestMatchers(HttpMethod.POST, Constants.LOGIN_URL).permitAll()
+                                                .requestMatchers(AUTH_WHITELIST).permitAll()
+                                                .anyRequest().authenticated())
+                                .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+                return http.build();
+        }
+
+        @Bean
+        public WebMvcConfigurer corsConfigurer() {
+                return new WebMvcConfigurer() {
+                        @Override
+                        public void addCorsMappings(CorsRegistry registry) {
+                                registry.addMapping("/**").allowedOrigins("*");
+                        }
+                };
+        }
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass
 public class BaseActiveEntity extends BaseAuditEntity {
+    @Nullable
     @Column(name = "active")
     private boolean active = true;
 }
