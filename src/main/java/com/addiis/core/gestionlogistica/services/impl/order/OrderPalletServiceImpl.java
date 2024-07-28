@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
+import com.addiis.core.gestionlogistica.domain.dto.request.OrderPalletInfo;
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderPalletRequest;
-import com.addiis.core.gestionlogistica.domain.dto.request.PalletAttributes;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderPalletsResponse;
-import com.addiis.core.gestionlogistica.mappers.OrderPalletMapper;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderPallet;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderPalletsRepository;
@@ -29,74 +28,69 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
   @Autowired
   private final OrderPalletsRepository orderPalletsRepository;
   @Autowired
-  private final OrderPalletMapper orderPalletMapper;
-  @Autowired
   private final OrderRepository orderRepository;
 
   @Override
   public OrderPalletsResponse save(OrderPalletRequest request) {
-    // return orderPalletMapper.toResponse(orderPalletsRepository.save(orderPalletMapper.toEntity(request)));
     return null;
   }
 
   @Override
   public OrderPalletsResponse update(OrderPalletRequest request, Long id) {
     return null;
-    // OrderPallet entity = this.find(id);
-    // OrderPallet updateEntity = this.orderPalletMapper.toEntity(request);
-    // updateEntity.setId(entity.getId());
-    // return this.orderPalletMapper.toResponse(this.orderPalletsRepository.save(updateEntity));
-  }
-
-  private OrderPallet find(Long id) {
-    return null;
-    // OrderPallet entity = orderPalletsRepository.findById(id)
-    //     .orElseThrow(() -> new IdNotFoundException("OrderPallet", id));
-    // return entity;
   }
 
   @Override
-  public OrderPalletsResponse updateByOrderId(List<PalletAttributes> request, Long orderId) {
-      // Obtener la orden por su ID
-      Order order = this.orderRepository.findById(orderId)
-          .orElseThrow(() -> new IdNotFoundException("Order", orderId));
-      // Obtener todos los OrderPallets relacionados con la orden
-      Set<OrderPallet> ordersPallets = order.getOrdersPallets();
-      // Crear un set para los pallets actualizados o nuevos
-      Set<OrderPallet> updatedPallets = new HashSet<>();
-      
-      // Iterar sobre los atributos de los pallets en la solicitud
-      for (PalletAttributes palletAttributes : request) {
-        Optional<OrderPallet> existingPalletOpt = ordersPallets.stream()
-        .filter(orderPallet -> orderPallet.getDispoId().equals(palletAttributes.getDispoId()))
-        .findFirst();
-        
-        if (existingPalletOpt.isPresent()) {
-          // Actualizar el pallet existente
-          OrderPallet existingPallet = existingPalletOpt.get();
-          existingPallet.setBigPallets(palletAttributes.getBigPallets());
-          existingPallet.setLittlePallets(palletAttributes.getLittlePallets());
-          updatedPallets.add(existingPallet);
-        } else {
-          // Crear un nuevo pallet si no existe
-          OrderPallet newPallet = new OrderPallet();
-          newPallet.setOrder(order);
-          newPallet.setDispoId(palletAttributes.getDispoId());
-          newPallet.setBigPallets(palletAttributes.getBigPallets());
-          newPallet.setLittlePallets(palletAttributes.getLittlePallets());
-          updatedPallets.add(newPallet);
-        }
-      }
+  public OrderPalletsResponse updateByOrderId(OrderPalletRequest request, Long orderId) {
+    // Obtener la orden por su ID
+    Order order = this.orderRepository.findById(orderId)
+        .orElseThrow(() -> new IdNotFoundException("Order", orderId));
+    // Obtener todos los OrderPallets relacionados con la orden
+    Set<OrderPallet> ordersPallets = order.getOrdersPallets();
+    // Crear un set para los pallets actualizados o nuevos
+    Set<OrderPallet> updatedPallets = new HashSet<>();
 
-      // AddiisLogger.info("it got here right after conditions");
-      
-      // Guardar los pallets actualizados o nuevos
-      List<OrderPallet> orderPalletsUpdated = orderPalletsRepository.saveAll(updatedPallets);
-      for (OrderPallet orderPallet : orderPalletsUpdated) {
-        AddiisLogger.info("OrderPallet: " + orderPallet.getOrder().getId());
+    // Iterar sobre los atributos de los pallets en la solicitud
+    for (OrderPalletInfo palletInfo : request.getOrderPalletsInfo()) {
+      Optional<OrderPallet> existingPalletOpt = ordersPallets.stream()
+          .filter(orderPallet -> orderPallet.getDispoId().equals(palletInfo.getDispoId().toString()))
+          .findFirst();
+
+      if (existingPalletOpt.isPresent()) {
+        // Actualizar el pallet existente
+        OrderPallet existingPallet = existingPalletOpt.get();
+        existingPallet.setBigPallets(palletInfo.getBigPallets());
+        existingPallet.setLittlePallets(palletInfo.getLittlePallets());
+        updatedPallets.add(existingPallet);
+      } else {
+        // Crear un nuevo pallet si no existe
+        OrderPallet newPallet = new OrderPallet();
+        newPallet.setOrder(order);
+        newPallet.setDispoId(palletInfo.getDispoId().toString());
+        newPallet.setBigPallets(palletInfo.getBigPallets());
+        newPallet.setLittlePallets(palletInfo.getLittlePallets());
+        updatedPallets.add(newPallet);
       }
-  
-      return new OrderPalletsResponse(orderPalletsUpdated);
+    }
+
+    // Guardar los pallets actualizados o nuevos
+    List<OrderPallet> orderPalletsUpdated = orderPalletsRepository.saveAll(updatedPallets);
+    for (OrderPallet orderPallet : orderPalletsUpdated) {
+      AddiisLogger.info("OrderPallet: " + orderPallet.getOrder().getId());
+    }
+
+    // Actualizar el canal, atraves de tienda
+    if (request.getChannelId() != null) {
+      if (order.getStore() != null && order.getStore().getChannel() != null) {
+        order.getStore().getChannel().setNumber(request.getChannelId().toString());
+        // Guardar la orden con el canal actualizado
+        orderRepository.save(order);
+        AddiisLogger.info("Channel number updated to: " + request.getChannelId());
+      } else {
+        AddiisLogger.warn("Store or Channel is null for Order ID: " + orderId);
+      }
+    }
+
+    return new OrderPalletsResponse(orderPalletsUpdated);
   }
-  
 }

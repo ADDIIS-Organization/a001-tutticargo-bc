@@ -1,19 +1,14 @@
 package com.addiis.core.gestionlogistica.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderPalletRequest;
-import com.addiis.core.gestionlogistica.domain.dto.request.PalletAttributes;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderPalletsResponse;
 import com.addiis.core.gestionlogistica.services.order.OrderPalletsService;
 
@@ -31,10 +26,10 @@ public class OrderPalletsController {
     return ResponseEntity.status(HttpStatus.CREATED).body(orderPalletService.save(request));
   }
 
-  @PutMapping("/{orderId}/order")
-  public ResponseEntity<OrderPalletsResponse> updateByOrderId(
-      @RequestBody List<PalletAttributes> request,
-      @PathVariable Long orderId) {
-    return ResponseEntity.ok(orderPalletService.updateByOrderId(request, orderId));
-  }
+  // @PutMapping("/{orderId}/order")
+  // public ResponseEntity<OrderPalletsResponse> updateByOrderId(
+  //     @RequestBody List<PalletAttributes> request,
+  //     @PathVariable Long orderId) {
+  //   return ResponseEntity.ok(orderPalletService.updateByOrderId(request, orderId));
+  // }
 }

@@ -1,7 +1,6 @@
 package com.addiis.core.gestionlogistica.persistence.entities.dispatch;
 
 import com.addiis.core.gestionlogistica.persistence.entities.common.BaseActiveEntity;
-import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 
 import jakarta.persistence.CascadeType;
