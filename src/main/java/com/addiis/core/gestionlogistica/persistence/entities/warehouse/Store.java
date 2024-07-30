@@ -9,6 +9,7 @@ import com.addiis.core.gestionlogistica.persistence.entities.common.BaseStatusEn
 import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Channel;
 import com.addiis.core.gestionlogistica.persistence.entities.order.Order;
 import com.addiis.core.gestionlogistica.persistence.entities.route.Route;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,7 +55,9 @@ public class Store extends BaseStatusEntity {
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     private Route route;
 
+    // Remove infinite recursion
     @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<Order> orders;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -2,6 +2,7 @@ package com.addiis.core.gestionlogistica.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderPalletInfo;
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderPalletRequest;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderPalletsResponse;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderResponse;
+import com.addiis.core.gestionlogistica.persistence.entities.order.OrderProduct;
+import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderProductRepository;
+import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderRepository;
 import com.addiis.core.gestionlogistica.services.order.OrderPalletsService;
 import com.addiis.core.gestionlogistica.services.order.OrderService;
 
@@ -29,6 +34,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private OrderPalletsService orderPalletService;
@@ -61,6 +69,13 @@ public class OrderController {
     @GetMapping("/{storeCode}")
     public ResponseEntity<List<OrderResponse>> findByStoreCode(@PathVariable Integer storeCode) {
         return ResponseEntity.ok(orderService.findByStoreCode(storeCode));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Page<Object[]>> test(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return ResponseEntity.ok(orderRepository.findStoresByRoute(pageRequest));
     }
 
 }

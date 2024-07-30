@@ -4,14 +4,19 @@ import java.math.BigInteger;
 
 import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+
+import java.time.OffsetDateTime;
+
+import java.time.ZoneOffset;
+
+import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +24,7 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name="order_product")
+@Table(name = "order_product")
 public class OrderProduct {
     @EmbeddedId
     private OrderProductId id;
@@ -36,4 +41,13 @@ public class OrderProduct {
     @MapsId("products_id")
     @JoinColumn(name = "products_id", referencedColumnName = "id")
     private Product product;
+
+    @CreationTimestamp
+    @Column(name = "date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Timestamp date;
+
+    @PrePersist
+    public void prePersist() {
+        date = Timestamp.from(OffsetDateTime.now(ZoneOffset.UTC).toInstant());
+    }
 }
