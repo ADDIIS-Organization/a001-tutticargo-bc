@@ -8,13 +8,14 @@ import com.addiis.core.gestionlogistica.domain.dto.response.StoreResponse;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Zone;
 import com.addiis.core.gestionlogistica.persistence.repositories.warehouse.ZoneRepository;
+
 @Component
 public class StoreMapper {
-  @Autowired
-  private ZoneRepository zoneRepository;
+  
+
   public Store toEntity(StoreRequest request) {
 
-    Zone zone = zoneRepository.findById(request.getZoneId()).orElseThrow(() -> new RuntimeException("Zone not found"));
+    
     return Store.builder()
         .name(request.getName())
         .code(request.getCode())
@@ -23,7 +24,7 @@ public class StoreMapper {
         .observation(request.getObservation())
         .priority(request.getPriority())
         .ruc(request.getRuc().toString())
-        .zone(zone)
+
         .build();
   }
 
@@ -37,7 +38,7 @@ public class StoreMapper {
         .observation(entity.getObservation())
         .priority(entity.getPriority())
         .ruc(entity.getRuc())
-        .zoneId(entity.getZone().getId())
+
         .build();
   }
 }

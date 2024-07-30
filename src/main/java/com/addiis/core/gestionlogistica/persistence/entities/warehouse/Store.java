@@ -46,9 +46,9 @@ public class Store extends BaseStatusEntity {
     @Column(name = "ruc")
     private String ruc;
 
-    @ManyToOne
-    @JoinColumn(name = "zones_id", referencedColumnName = "id")
-    private Zone zone;
+    // @ManyToOne
+    // @JoinColumn(name = "zones_id", referencedColumnName = "id")
+    // private Zone zone;
 
     @ManyToOne
     @JoinColumn(name = "route_id", referencedColumnName = "id")

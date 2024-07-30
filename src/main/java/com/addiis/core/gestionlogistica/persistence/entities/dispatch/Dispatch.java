@@ -3,17 +3,21 @@ package com.addiis.core.gestionlogistica.persistence.entities.dispatch;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Set;
 
+import com.addiis.core.gestionlogistica.persistence.entities.vehicle.Driver;
 import com.addiis.core.gestionlogistica.persistence.entities.vehicle.Vehicle;
+import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode
 @Entity
-@Table(name="dispatches")
+@Table(name = "dispatches")
 public class Dispatch {
 
     @Id
@@ -27,9 +31,16 @@ public class Dispatch {
     @Column(name = "observation", length = 150)
     private String observation;
 
-    @ManyToOne
-    @JoinColumn(name = "platform_id", referencedColumnName = "id")
-    private Platform platform;
+    @Column(name = "date")
+    private LocalDate date = LocalDate.now();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "driver_id", referencedColumnName = "id", nullable = true)
+    private Driver driver;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "store_id", referencedColumnName = "id", nullable = true)
+    private Store store;
 
     @OneToMany(mappedBy = "dispatch")
     private Set<DispatchHistory> dispatchHistories;
