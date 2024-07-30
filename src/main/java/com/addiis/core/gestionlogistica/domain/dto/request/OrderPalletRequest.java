@@ -8,7 +8,10 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Getter
@@ -18,7 +21,10 @@ import jakarta.validation.constraints.Size;
 @Builder
 public class OrderPalletRequest {
 
-  @NotEmpty(message = "The palletAttributes list cannot be empty")
-  @Size(min = 6, message = "The palletAttributes list must have at least 6 elements")
-  private List<PalletAttributes> palletAttributes;
+  @NotNull(message = "Channel ID cannot be null")
+  private Integer channelId;
+
+  @NotEmpty(message = "The orderPalletsInfo list cannot be empty")
+  @Size(min = 6, message = "The orderPalletsInfo list must have at least 6 elements")
+  private List<OrderPalletInfo> orderPalletsInfo;
 }
