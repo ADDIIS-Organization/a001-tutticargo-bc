@@ -35,6 +35,6 @@ public class Zone extends BaseActiveEntity{
     @JoinColumn(name = "cedi_id", referencedColumnName = "id")
     private Cedi cedi;
 
-    @OneToMany(mappedBy = "zone")
-    private Set<Store> stores;
+    // @OneToMany(mappedBy = "zone")
+    // private Set<Store> stores;
 }

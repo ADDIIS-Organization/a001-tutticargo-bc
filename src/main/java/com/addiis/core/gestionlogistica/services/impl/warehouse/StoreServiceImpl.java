@@ -46,6 +46,7 @@ public class StoreServiceImpl implements StoreService {
         "LEFT JOIN routes r ON s.route_id = r.id " +
         "LEFT JOIN channels c ON s.channel_id = c.id " +
         "LEFT JOIN platforms p ON c.platform_id = p.id " +
+        "ORDER BY r.route_number " + // Añadido para ordenar por nombre de ruta
         "LIMIT ? OFFSET ?";
 
     int offset = page * size;

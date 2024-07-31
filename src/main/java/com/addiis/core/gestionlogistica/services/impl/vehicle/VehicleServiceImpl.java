@@ -1,5 +1,8 @@
 package com.addiis.core.gestionlogistica.services.impl.vehicle;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +29,11 @@ public class VehicleServiceImpl implements VehicleService {
   public VehicleResponse create(Vehicle request) {
     // TODO Auto-generated method stub
     return null;
+  }
+
+  @Override
+  public List<VehicleResponse> listAll(){
+    return vehicleRepository.findAll().stream().map(vehicleMapper::toResponse).collect(Collectors.toList());
   }
 
   @Override
