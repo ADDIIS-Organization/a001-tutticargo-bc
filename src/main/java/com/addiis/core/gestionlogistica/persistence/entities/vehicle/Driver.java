@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.Set;
 
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -27,6 +29,9 @@ public class Driver {
 
     @Column(name = "active")
     private Integer active;
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private Set<Dispatch> dispatches;
 
     @OneToMany(mappedBy = "driver")
     private Set<VehicleDriver> vehicleDrivers;
