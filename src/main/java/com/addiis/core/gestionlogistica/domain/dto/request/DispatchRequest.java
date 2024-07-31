@@ -19,7 +19,8 @@ public class DispatchRequest {
   @NotNull(message = "Driver ID is required")
   private Long driverId;
   @NotNull(message = "Store ID is required")
-  private Long storeId;
+  private Long orderStoreId;
   @NotNull(message = "Vehicle ID is required")
   private Long vehicleId;
+
 }

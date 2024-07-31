@@ -44,9 +44,7 @@ public class Dispatch {
     @JoinColumn(name = "order_store_id", referencedColumnName = "id")
     private OrderStore orderStore;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "store_id", referencedColumnName = "id", nullable = true)
-    private Store store;
+    
 
     @OneToMany(mappedBy = "dispatch")
     private Set<DispatchHistory> dispatchHistories;

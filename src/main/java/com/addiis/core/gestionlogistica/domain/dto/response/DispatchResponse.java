@@ -15,6 +15,6 @@ public class DispatchResponse {
   private Long id;
   private String observation;
   private DriverResponse driver;
-  private StoreResponse store;
+  private OrderStoreResponse orderStore;
   private VehicleResponse vehicle;
 }
