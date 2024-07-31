@@ -40,6 +40,7 @@ class WebSecurityConfig {
         public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
                 http
+                                
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(authz -> authz
                                                 .requestMatchers(HttpMethod.POST, Constants.LOGIN_URL).permitAll()
@@ -55,7 +56,9 @@ class WebSecurityConfig {
                 return new WebMvcConfigurer() {
                         @Override
                         public void addCorsMappings(CorsRegistry registry) {
-                                registry.addMapping("/**").allowedOrigins("*");
+                                registry.addMapping("/**")
+                                .allowedOrigins("*")
+                                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
                         }
                 };
         }
