@@ -6,5 +6,5 @@ import com.addiis.core.gestionlogistica.domain.dto.response.OrderPalletsResponse
 public interface OrderPalletsService {
   OrderPalletsResponse save(OrderPalletRequest request);
   OrderPalletsResponse update(OrderPalletRequest request, Long id);
-  OrderPalletsResponse updateByOrderId(OrderPalletRequest request, Long orderId);
+  OrderPalletsResponse updateByOrderStoreId(OrderPalletRequest request, Long orderStoreId);
 }

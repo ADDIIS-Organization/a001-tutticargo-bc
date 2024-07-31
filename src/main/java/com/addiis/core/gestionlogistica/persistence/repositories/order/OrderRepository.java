@@ -22,29 +22,29 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     // "ORDER BY o.date ASC, r.routeNumber ASC")
     // Page<Order> findAllOrderedByRoute(Pageable pageable);
 
-    Date date = new Date();
+//     Date date = new Date();
 
-    @Query("SELECT o \n" + //
-            "FROM Order o \n" + //
-            "JOIN o.store s \n" + //
-            "JOIN s.route r \n" + //
-            "ORDER BY o.date ASC, r.routeNumber ASC")
-    Page<Order> findAllOrderedByRoute(Pageable pageable);
+//     @Query("SELECT o \n" + //
+//             "FROM Order o \n" + //
+//             "JOIN o.store s \n" + //
+//             "JOIN s.route r \n" + //
+//             "ORDER BY o.date ASC, r.routeNumber ASC")
+//     Page<Order> findAllOrderedByRoute(Pageable pageable);
 
-    @Query("SELECT o FROM Order o JOIN o.store s  WHERE s.code = :storeCode")
-    List<Order> findByStoreCode(@Param("storeCode") Integer storeCode);
+//     @Query("SELECT o FROM Order o JOIN o.store s  WHERE s.code = :storeCode")
+//     List<Order> findByStoreCode(@Param("storeCode") Integer storeCode);
 
-    @Query("SELECT s.code as storeCode, " +
-            "       s.name as storeName, " +
-            "       SUM(op.bigPallets) as totalBigPallets, " +
-            "       SUM(op.littlePallets) as totalLittlePallets " +
-            "FROM Order o " +
-            "JOIN o.store s " +
-            "JOIN o.ordersPallets op " +
-            "GROUP BY s.code, s.name " +
-            "ORDER BY s.name ASC")
-    Page<Object[]> findStoreSummary(Pageable pageable);
+//     @Query("SELECT s.code as storeCode, " +
+//             "       s.name as storeName, " +
+//             "       SUM(op.bigPallets) as totalBigPallets, " +
+//             "       SUM(op.littlePallets) as totalLittlePallets " +
+//             "FROM Order o " +
+//             "JOIN o.store s " +
+//             "JOIN o.ordersPallets op " +
+//             "GROUP BY s.code, s.name " +
+//             "ORDER BY s.name ASC")
+//     Page<Object[]> findStoreSummary(Pageable pageable);
 
-    @Query("SELECT s FROM Store s JOIN s.route r")
-    Page<Object[]> findStoresByRoute(Pageable pageable);
+//     @Query("SELECT s FROM Store s JOIN s.route r")
+//     Page<Object[]> findStoresByRoute(Pageable pageable);
 }

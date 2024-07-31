@@ -7,5 +7,5 @@ import com.addiis.core.gestionlogistica.persistence.entities.order.OrderPallet;
 
 @Repository
 public interface OrderPalletsRepository extends JpaRepository<OrderPallet, Long> {
-    OrderPallet findByOrderId(Long orderId);
+    OrderPallet findByOrderStoreId(Long orderStoreId);
 }

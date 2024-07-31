@@ -11,6 +11,7 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,9 +32,21 @@ public class OrderStore {
     @JoinColumn(name = "store_id", referencedColumnName = "id")
     private Store store;
 
+    @OneToMany(mappedBy = "orderStore")
+    private Set<OrderPallet> orderPallets;
+
     @CreationTimestamp
     @Column(name = "date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp date;
+
+    @Column(name = "big_pallets")
+    private Integer bigPallets;
+
+    @Column(name = "little_pallets")
+    private Integer littlePallets;
+
+    @Column(name = "total_pallets")
+    private Integer totalPallets;
 
     @PrePersist
     public void prePersist() {

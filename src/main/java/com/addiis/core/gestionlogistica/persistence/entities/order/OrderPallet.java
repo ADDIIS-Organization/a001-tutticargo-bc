@@ -22,9 +22,9 @@ public class OrderPallet {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "orders_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_store_id", referencedColumnName = "id")
     @JsonBackReference
-    private Order order;
+    private OrderStore orderStore;
 
     @Column(name = "picker_id")
     private Integer pickerId;

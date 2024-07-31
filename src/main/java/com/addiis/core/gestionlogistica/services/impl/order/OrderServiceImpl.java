@@ -39,31 +39,34 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Page<OrderResponse> findAll(int page, int size) {
-        if (page < 0) {
-            page = 0;
-        }
-        PageRequest pageRequest = PageRequest.of(page, size);
-        AddiisLogger.info("pageRequest: " + pageRequest);
-        try {
-            // Llamar al método del repositorio que ordena por routeNumber
-            Page<Order> orders = orderRepository.findAllOrderedByRoute(pageRequest);
-            AddiisLogger.info("Orders: " + orders);
-            return orders.map(this::convertToOrderResponse);
-        } catch (Exception e) {
-            AddiisLogger.error("Error getting orders", this.getClass().getName(), "findAll", e.getMessage());
-            throw e; // Rethrow the exception after logging it
-        }
+        // if (page < 0) {
+        //     page = 0;
+        // }
+        // PageRequest pageRequest = PageRequest.of(page, size);
+        // AddiisLogger.info("pageRequest: " + pageRequest);
+        // try {
+        //     // Llamar al método del repositorio que ordena por routeNumber
+        //     Page<Order> orders = orderRepository.findAllOrderedByRoute(pageRequest);
+        //     AddiisLogger.info("Orders: " + orders);
+        //     return orders.map(this::convertToOrderResponse);
+        // } catch (Exception e) {
+        //     AddiisLogger.error("Error getting orders", this.getClass().getName(), "findAll", e.getMessage());
+        //     throw e; // Rethrow the exception after logging it
+        // }
+        return null;
     }
 
     @Override
     public List<OrderResponse> findByStoreCode(Integer storeCode) {
-        try {
-            return orderRepository.findByStoreCode(storeCode).stream().map(this::convertToOrderResponse)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            AddiisLogger.error("Error getting orders", this.getClass().getName(), "findByStoreCode", e.getMessage());
-            throw e; // Rethrow the exception after logging it
-        }
+        // try {
+        //     return orderRepository.findByStoreCode(storeCode).stream().map(this::convertToOrderResponse)
+        //             .collect(Collectors.toList());
+        // } catch (Exception e) {
+        //     AddiisLogger.error("Error getting orders", this.getClass().getName(), "findByStoreCode", e.getMessage());
+        //     throw e; // Rethrow the exception after logging it
+        // }
+
+        return null;
     }
 
     private OrderResponse convertToOrderResponse(Order order) {
@@ -84,33 +87,33 @@ public class OrderServiceImpl implements OrderService {
         String platformNumber = platform != null ? platform.getNumber() : null;
 
         String storeName = store != null ? store.getName() : null;
-        Set<OrderPallet> ordersPallets = order.getOrdersPallets();
-        AddiisLogger.info("ordersPallets: " + ordersPallets);
+        // Set<OrderPallet> ordersPallets = order.getOrdersPallets();
+        // AddiisLogger.info("ordersPallets: " + ordersPallets);
 
         // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío
-        if (ordersPallets == null || ordersPallets.isEmpty()) {
-            // Crear un array de pallets predeterminados
-            List<OrderPallet> defaultPallets = new ArrayList<>();
-            for (int i = 1; i <= 13; i++) {
-                OrderPallet pallet = new OrderPallet();
-                pallet.setLittlePallets(0);
-                pallet.setBigPallets(0);
-                if (i == 13) {
-                    pallet.setDispoId("Agotados");
-                } else {
+        // if (ordersPallets == null || ordersPallets.isEmpty()) {
+        //     // Crear un array de pallets predeterminados
+        //     List<OrderPallet> defaultPallets = new ArrayList<>();
+        //     for (int i = 1; i <= 13; i++) {
+        //         OrderPallet pallet = new OrderPallet();
+        //         pallet.setLittlePallets(0);
+        //         pallet.setBigPallets(0);
+        //         if (i == 13) {
+        //             pallet.setDispoId("Agotados");
+        //         } else {
 
-                    pallet.setDispoId(String.valueOf(i));
+        //             pallet.setDispoId(String.valueOf(i));
 
-                }
-                  defaultPallets.add(pallet);
-            }
-            ordersPallets = new HashSet<>(defaultPallets); // Convertir la lista a un conjunto
-        }
+        //         }
+        //           defaultPallets.add(pallet);
+        //     }
+        //     ordersPallets = new HashSet<>(defaultPallets); // Convertir la lista a un conjunto
+        // }
 
         // Calcular bigPallets y littlePallets
-        Integer bigPallets = ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
-        Integer littlePallets = ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
-        Integer totalPalletsNumber = bigPallets + littlePallets;
+        // Integer bigPallets = ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
+        // Integer littlePallets = ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
+        // Integer totalPalletsNumber = bigPallets + littlePallets;
 
         return OrderResponse.builder()
                 .id(order.getId())
@@ -120,10 +123,10 @@ public class OrderServiceImpl implements OrderService {
                 .channelNumber(channelNumber)
                 .storeName(storeName)
                 .date(date)
-                .ordersPallets(ordersPallets)
-                .bigPallets(bigPallets)
-                .littlePallets(littlePallets)
-                .totalPalletsNumber(totalPalletsNumber)
+                // .ordersPallets(ordersPallets)
+                // .bigPallets(bigPallets)
+                // .littlePallets(littlePallets)
+                // .totalPalletsNumber(totalPalletsNumber)
                 .platformNumber(platformNumber)
                 .build();
     }

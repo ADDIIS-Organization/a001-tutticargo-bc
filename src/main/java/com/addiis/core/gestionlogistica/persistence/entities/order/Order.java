@@ -47,9 +47,9 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private Set<OrderProduct> ordersProducts;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private Set<OrderPallet> ordersPallets;
+    // @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    // @JsonManagedReference
+    // private Set<OrderPallet> ordersPallets;
 
     @CreationTimestamp
     @Column(name = "date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

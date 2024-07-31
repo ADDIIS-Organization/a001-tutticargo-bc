@@ -41,41 +41,41 @@ public class OrderController {
     @Autowired
     private OrderPalletsService orderPalletService;
 
-    @GetMapping
-    public ResponseEntity<Page<OrderResponse>> findAll(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok(orderService.findAll(page, size));
-    }
+    // @GetMapping
+    // public ResponseEntity<Page<OrderResponse>> findAll(@RequestParam(defaultValue = "1") int page,
+    //         @RequestParam(defaultValue = "10") int size) {
+    //     return ResponseEntity.ok(orderService.findAll(page, size));
+    // }
 
-    @PatchMapping("/{orderId}/pallets")
-    public ResponseEntity<OrderPalletsResponse> updateByOrderId(
-            @RequestBody OrderPalletRequest request,
-            @PathVariable Long orderId) {
-        // Print the orderId and channelId
-        System.out.println("Order ID: " + orderId);
-        System.out.println("Channel ID: " + request.getChannelId());
+    // @PatchMapping("/{orderId}/pallets")
+    // public ResponseEntity<OrderPalletsResponse> updateByOrderId(
+    //         @RequestBody OrderPalletRequest request,
+    //         @PathVariable Long orderId) {
+    //     // Print the orderId and channelId
+    //     System.out.println("Order ID: " + orderId);
+    //     System.out.println("Channel ID: " + request.getChannelId());
 
-        // Print the details of each pallet
-        for (OrderPalletInfo pallet : request.getOrderPalletsInfo()) {
-            System.out.println("BigPallets: " + pallet.getBigPallets());
-            System.out.println("LittlePallets: " + pallet.getLittlePallets());
-            System.out.println("DispoId: " + pallet.getDispoId());
-        }
+    //     // Print the details of each pallet
+    //     for (OrderPalletInfo pallet : request.getOrderPalletsInfo()) {
+    //         System.out.println("BigPallets: " + pallet.getBigPallets());
+    //         System.out.println("LittlePallets: " + pallet.getLittlePallets());
+    //         System.out.println("DispoId: " + pallet.getDispoId());
+    //     }
 
-        // Update the order pallets using the service
-        return ResponseEntity.ok(orderPalletService.updateByOrderId(request, orderId));
-    }
+    //     // Update the order pallets using the service
+    //     return ResponseEntity.ok(orderPalletService.updateByOrderId(request, orderId));
+    // }
 
-    @GetMapping("/{storeCode}")
-    public ResponseEntity<List<OrderResponse>> findByStoreCode(@PathVariable Integer storeCode) {
-        return ResponseEntity.ok(orderService.findByStoreCode(storeCode));
-    }
+    // @GetMapping("/{storeCode}")
+    // public ResponseEntity<List<OrderResponse>> findByStoreCode(@PathVariable Integer storeCode) {
+    //     return ResponseEntity.ok(orderService.findByStoreCode(storeCode));
+    // }
 
-    @GetMapping("/test")
-    public ResponseEntity<Page<Object[]>> test(@RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return ResponseEntity.ok(orderRepository.findStoresByRoute(pageRequest));
-    }
+    // // @GetMapping("/test")
+    // // public ResponseEntity<Page<Object[]>> test(@RequestParam(defaultValue = "1") int page,
+    // //         @RequestParam(defaultValue = "10") int size) {
+    // //     PageRequest pageRequest = PageRequest.of(page, size);
+    // //     return ResponseEntity.ok(orderRepository.findStoresByRoute(pageRequest));
+    // // }
 
 }
