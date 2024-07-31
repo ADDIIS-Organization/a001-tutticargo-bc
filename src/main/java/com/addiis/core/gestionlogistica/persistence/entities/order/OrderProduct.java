@@ -5,14 +5,11 @@ import java.math.BigInteger;
 import com.addiis.core.gestionlogistica.persistence.entities.product.Product;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.OffsetDateTime;
 
 import java.time.ZoneOffset;
-
-import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
