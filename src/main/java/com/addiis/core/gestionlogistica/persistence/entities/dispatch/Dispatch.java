@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.addiis.core.gestionlogistica.persistence.entities.order.OrderStore;
 import com.addiis.core.gestionlogistica.persistence.entities.vehicle.Driver;
 import com.addiis.core.gestionlogistica.persistence.entities.vehicle.Vehicle;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
@@ -32,11 +33,16 @@ public class Dispatch {
     private String observation;
 
     @Column(name = "date")
+    @Builder.Default
     private LocalDate date = LocalDate.now();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "driver_id", referencedColumnName = "id", nullable = true)
     private Driver driver;
+
+    @OneToOne
+    @JoinColumn(name = "order_store_id", referencedColumnName = "id")
+    private OrderStore orderStore;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id", referencedColumnName = "id", nullable = true)

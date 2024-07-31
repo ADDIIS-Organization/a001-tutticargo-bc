@@ -1,10 +1,10 @@
 package com.addiis.core.gestionlogistica.persistence.entities.order;
 
-import jakarta.persistence.*;
-import lombok.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.Date;
+import jakarta.persistence.*;
 import java.util.Objects;
+import java.util.Date;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor

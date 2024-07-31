@@ -1,5 +1,9 @@
 package com.addiis.core.gestionlogistica.services.impl.dispatch;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +33,7 @@ public class DispatchServiceImpl implements DispatchService {
   @Override
   public DispatchResponse create(DispatchRequest request) {
     Dispatch entity = dispatchMapper.toEntity(request);
+    entity.setDate(LocalDate.now());
     Dispatch dispatchCreated = dispatchRepository.save(entity);
     return dispatchMapper.toResponse(dispatchCreated);
 
@@ -48,6 +53,19 @@ public class DispatchServiceImpl implements DispatchService {
 
     Pageable pageable = PageRequest.of(page, size);
     return this.dispatchRepository.findAll(pageable).map(dispatchMapper::toResponse);
+  }
+
+  @Override
+  public Page<DispatchResponse> findDispatchesByDate(LocalDate dispatchDate , int page, int size) {
+    if (page < 0) {
+      page = 0;
+
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, size);
+    return this.dispatchRepository.findDispatchesByDate(dispatchDate, pageable).map(dispatchMapper::toResponse);
+  
+   
   }
 
   @Override
