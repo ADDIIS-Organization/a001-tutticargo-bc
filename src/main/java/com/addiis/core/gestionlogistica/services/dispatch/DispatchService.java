@@ -11,4 +11,6 @@ import com.addiis.core.gestionlogistica.services.CRUDService;
 
 public interface DispatchService extends CRUDService<DispatchRequest, DispatchResponse, Long> {
   Page<DispatchResponse> findDispatchesByDate(LocalDate dispatchDate , int page, int size);
+  DispatchResponse updateObservations(String observations, Long id);
+
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,5 +46,11 @@ public class DispatchController {
   public ResponseEntity<Page<DispatchResponse>> findDispatchesByDate( @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dispatchDate, @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
     return ResponseEntity.ok(dispatchService.findDispatchesByDate(dispatchDate, page, size));
+  }
+
+  @PatchMapping("/{id}/observations")
+  public ResponseEntity<DispatchResponse> updateObservations(@PathVariable Long id, @RequestBody String observations) {
+    DispatchResponse response = dispatchService.updateObservations(observations, id);
+    return ResponseEntity.ok(response);
   }
 }

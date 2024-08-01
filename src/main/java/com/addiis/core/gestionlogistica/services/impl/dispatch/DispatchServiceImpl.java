@@ -2,6 +2,7 @@ package com.addiis.core.gestionlogistica.services.impl.dispatch;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,26 @@ public class DispatchServiceImpl implements DispatchService {
 
   @Override
   public DispatchResponse create(DispatchRequest request) {
+
+    Optional<Dispatch> existingDispatch = this.dispatchRepository.findByOrderStoreId(request.getOrderStoreId());
+
+ if (existingDispatch.isPresent()) {
+      Dispatch entityUpdate = dispatchMapper.toEntity(request);
+      entityUpdate.setId(existingDispatch.get().getId());
+      return this.dispatchMapper.toResponse(this.dispatchRepository.save(entityUpdate));
+    }else{
     Dispatch entity = dispatchMapper.toEntity(request);
     entity.setDate(LocalDate.now());
     Dispatch dispatchCreated = dispatchRepository.save(entity);
     return dispatchMapper.toResponse(dispatchCreated);
+    }
+  }
 
+  @Override
+  public DispatchResponse updateObservations(String observations, Long id) {
+    Dispatch dispatch = this.dispatchRepository.findById(id).orElseThrow(() -> new RuntimeException("Dispatch not found"));
+    dispatch.setObservation(observations);
+    return dispatchMapper.toResponse(this.dispatchRepository.save(dispatch));
   }
 
   @Override
@@ -51,7 +67,7 @@ public class DispatchServiceImpl implements DispatchService {
 
     }
 
-    Pageable pageable = PageRequest.of(page, size);
+    Pageable pageable = PageRequest.of(page - 1, size);
     return this.dispatchRepository.findAll(pageable).map(dispatchMapper::toResponse);
   }
 
