@@ -1,5 +1,7 @@
 package com.addiis.core.gestionlogistica.persistence.entities.dispatch;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +25,6 @@ public class DispatchHistory {
     @ManyToOne
     @MapsId("dispatches_id")
     @JoinColumn(name = "dispatches_id", referencedColumnName = "id")
+    @JsonBackReference
     private Dispatch dispatch;
 }

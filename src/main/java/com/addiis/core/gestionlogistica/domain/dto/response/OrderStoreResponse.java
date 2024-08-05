@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderPallet;
 
 import lombok.AllArgsConstructor;
@@ -31,5 +32,5 @@ public class OrderStoreResponse {
     private Integer littlePallets;
     private Integer totalPallets;
     private Set<OrderPallet> ordersPallets;
-
+    private Dispatch dispatch;
 }

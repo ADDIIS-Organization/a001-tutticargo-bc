@@ -27,7 +27,6 @@ public class OrderStoreMapper {
 
     // Obtener los pallets actuales
     Set<OrderPallet> ordersPallets = entity.getOrderPallets();
-    AddiisLogger.info("ordersPallets: " + ordersPallets);
 
     // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío
     if (ordersPallets == null || ordersPallets.isEmpty()) {
@@ -53,14 +52,12 @@ public class OrderStoreMapper {
 
       // Finalmente, relacionar los pallets con el OrderStore en ambas direcciones
       currentOrderStore.setOrderPallets(ordersPallets);
-
     }
 
     // Calcular bigPallets y littlePallets
     Integer bigPallets = ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
     Integer littlePallets = ordersPallets.stream().mapToInt(OrderPallet::getLittlePallets).sum();
     Integer totalPalletsNumber = bigPallets + littlePallets;
-
 
     // Verificar si el canal asociado está presente
     Long channelId = entity.getStore().getChannel() != null ? entity.getStore().getChannel().getId()
@@ -73,6 +70,9 @@ public class OrderStoreMapper {
     String platformName = entity.getStore().getChannel() != null && entity.getStore().getChannel().getPlatform() != null
         ? entity.getStore().getChannel().getPlatform().getNumber()
         : "default_platform_name";
+
+    AddiisLogger.info("The Order store is: " + entity.getId());
+    AddiisLogger.info("The Order store is: " + entity.getId() + " and the dispatch is: " + entity.getDispatch());
 
     return OrderStoreResponse.builder()
         .id(entity.getId())
@@ -89,6 +89,7 @@ public class OrderStoreMapper {
         .bigPallets(bigPallets)
         .totalPallets(totalPalletsNumber)
         .ordersPallets(ordersPallets)
+        .dispatch(entity.getDispatch())
         .build();
   }
 }

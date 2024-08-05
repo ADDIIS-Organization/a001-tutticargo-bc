@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderStore;
 import com.addiis.core.gestionlogistica.persistence.entities.vehicle.Driver;
 import com.addiis.core.gestionlogistica.persistence.entities.vehicle.Vehicle;
-import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,13 +40,13 @@ public class Dispatch {
     private Driver driver;
 
     @OneToOne
-    @JoinColumn(name = "order_store_id", referencedColumnName = "id")
+    // @JoinColumn(name = "order_store_id", referencedColumnName = "id")
+    @JsonBackReference
     private OrderStore orderStore;
-
     
-
-    @OneToMany(mappedBy = "dispatch")
-    private Set<DispatchHistory> dispatchHistories;
+    // @OneToMany(mappedBy = "dispatch")
+    // @JsonManagedReference
+    // private Set<DispatchHistory> dispatchHistories;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
