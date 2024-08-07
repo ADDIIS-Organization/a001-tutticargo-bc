@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.addiis.core.gestionlogistica.domain.dto.request.DispatchRequest;
 import com.addiis.core.gestionlogistica.domain.dto.response.DispatchResponse;
+import com.addiis.core.gestionlogistica.domain.dto.response.DispatchToOrderResponse;
 import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderStoreRepository;
 import com.addiis.core.gestionlogistica.persistence.repositories.vehicles.DriverRepository;
@@ -49,6 +50,7 @@ public class DispatchMapper {
             .platform(platformRepository.findById(request.getPlatformId()).orElseThrow(() -> new RuntimeException("Platform not found")))
             .build();
   }
+  
 
 
 }

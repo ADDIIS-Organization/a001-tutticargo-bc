@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
+import com.addiis.core.gestionlogistica.domain.dto.response.DispatchToOrderResponse;
 import com.addiis.core.gestionlogistica.domain.dto.response.OrderStoreResponse;
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderPallet;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderStore;
 import com.addiis.core.gestionlogistica.persistence.repositories.order.OrderPalletsRepository;
@@ -60,8 +62,7 @@ public class OrderStoreMapper {
     Integer totalPalletsNumber = bigPallets + littlePallets;
 
     // Verificar si el canal asociado está presente
-    Long channelId = entity.getStore().getChannel() != null ? entity.getStore().getChannel().getId()
-        : null;
+    Long channelId = entity.getStore().getChannel() != null ? entity.getStore().getChannel().getId() : null;
     String channelName = entity.getStore().getChannel() != null ? entity.getStore().getChannel().getNumber()
         : "default_channel_name";
     Long platformId = entity.getStore().getChannel() != null && entity.getStore().getChannel().getPlatform() != null
@@ -71,8 +72,16 @@ public class OrderStoreMapper {
         ? entity.getStore().getChannel().getPlatform().getNumber()
         : "default_platform_name";
 
+    // Log de información sobre el OrderStore
     AddiisLogger.info("The Order store is: " + entity.getId());
-    AddiisLogger.info("The Order store is: " + entity.getId() + " and the dispatch is: " + entity.getDispatch());
+
+    // Verificación si Dispatch está presente
+    Dispatch dispatch = entity.getDispatch();
+    if (dispatch != null) {
+      AddiisLogger.info("The Order store is: " + entity.getId() + " and the dispatch is: " + dispatch);
+    } else {
+      AddiisLogger.info("The Order store is: " + entity.getId() + " and the dispatch is: null");
+    }
 
     return OrderStoreResponse.builder()
         .id(entity.getId())
@@ -89,7 +98,18 @@ public class OrderStoreMapper {
         .bigPallets(bigPallets)
         .totalPallets(totalPalletsNumber)
         .ordersPallets(ordersPallets)
-        .dispatch(entity.getDispatch())
+        .dispatch(dispatchToOrderResponse(dispatch)) // Manejo del Dispatch, puede ser null
+        .build();
+  }
+
+  public DispatchToOrderResponse dispatchToOrderResponse(Dispatch entity) {
+    if (entity == null) {
+      return null; // Si no hay dispatch, retorna null o una respuesta predeterminada
+    }
+
+    return DispatchToOrderResponse.builder()
+        .driver(entity.getDriver())
+        .vehicle(entity.getVehicle())
         .build();
   }
 }

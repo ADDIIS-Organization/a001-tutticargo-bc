@@ -32,5 +32,5 @@ public class OrderStoreResponse {
     private Integer littlePallets;
     private Integer totalPallets;
     private Set<OrderPallet> ordersPallets;
-    private Dispatch dispatch;
+    private DispatchToOrderResponse dispatch;
 }
