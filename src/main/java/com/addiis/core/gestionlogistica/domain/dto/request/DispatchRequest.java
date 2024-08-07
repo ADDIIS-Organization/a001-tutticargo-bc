@@ -22,5 +22,7 @@ public class DispatchRequest {
   private Long orderStoreId;
   @NotNull(message = "Vehicle ID is required")
   private Long vehicleId;
+  @NotNull(message = "Platform ID is required")
+  private Long platformId;
 
 }

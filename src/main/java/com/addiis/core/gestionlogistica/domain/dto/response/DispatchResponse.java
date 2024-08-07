@@ -1,5 +1,7 @@
 package com.addiis.core.gestionlogistica.domain.dto.response;
 
+import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Platform;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,4 +19,5 @@ public class DispatchResponse {
   private DriverResponse driver;
   private OrderStoreResponse orderStore;
   private VehicleResponse vehicle;
+ 
 }

@@ -1,9 +1,12 @@
 package com.addiis.core.gestionlogistica.controllers;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -36,6 +39,11 @@ public class OrderStoreController {
   @GetMapping
   public ResponseEntity<Page<OrderStoreResponse>> findAll(int page, int size) {
     return ResponseEntity.ok(orderStoreService.findAll(page, size));
+  }
+
+  @GetMapping("/byDate/{date}")
+  public ResponseEntity<Page<OrderStoreResponse>> findAllOrderByRouteNumber(int page, int size, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    return ResponseEntity.ok(orderStoreService.findAllOrderByRouteNumber(page, size, date));
   }
 
   @GetMapping("/{storeCode}")

@@ -29,4 +29,7 @@ public class Platform extends BaseActiveEntity {
 
     @OneToMany(mappedBy = "platform")
     private Set<Channel> channels;
+
+    @OneToMany(mappedBy = "platform")
+    private Set<Dispatch> dispatches;
 }

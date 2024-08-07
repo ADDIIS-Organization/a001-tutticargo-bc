@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 
 public interface DispatchRepository extends JpaRepository<Dispatch, Long> {
-  @Query("SELECT d FROM Dispatch d JOIN FETCH d.driver WHERE d.date = :date")
+  @Query("SELECT d FROM Dispatch d JOIN FETCH d.driver WHERE d.date = :date ORDER BY d.platform")
   Page<Dispatch> findDispatchesByDate(@Param("date") LocalDate date , Pageable pageable);
 
   Optional<Dispatch> findByOrderStoreId(Long id);

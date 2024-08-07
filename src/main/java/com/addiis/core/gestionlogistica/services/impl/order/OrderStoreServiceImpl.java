@@ -1,5 +1,7 @@
 package com.addiis.core.gestionlogistica.services.impl.order;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +50,18 @@ public class OrderStoreServiceImpl implements OrderStoreService {
     }
 
     Pageable pageable = PageRequest.of(page - 1, size);
-    return this.orderStoreRepository.findAllOrderByRouteNumber(pageable).map(orderStoreMapper::toResponse);
+    return this.orderStoreRepository.findAll(pageable).map(orderStoreMapper::toResponse);
+  }
+
+  @Override
+  public Page<OrderStoreResponse> findAllOrderByRouteNumber(int page , int size  , LocalDate date) {
+    if (page < 0) {
+      page = 0;
+      
+    }
+
+    Pageable pageable = PageRequest.of(page - 1, size);
+    return this.orderStoreRepository.findAllOrderByRouteNumber(pageable, date).map(orderStoreMapper::toResponse);
   }
 
   @Override

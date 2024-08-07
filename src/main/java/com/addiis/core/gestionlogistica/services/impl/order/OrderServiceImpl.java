@@ -2,10 +2,12 @@ package com.addiis.core.gestionlogistica.services.impl.order;
 
 import java.math.BigInteger;
 import java.sql.Timestamp; // Asegúrate de importar el tipo correcto
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.addiis.core.gestionlogistica.config.AddiisLogger;
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderRequest;
