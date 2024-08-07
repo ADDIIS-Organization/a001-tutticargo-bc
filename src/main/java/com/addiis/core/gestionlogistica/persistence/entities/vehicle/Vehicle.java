@@ -36,8 +36,8 @@ public class Vehicle extends BaseAuditEntity {
     @JoinColumn(name = "vehicles_types_id", referencedColumnName = "id")
     private VehicleType vehicleType;
 
-    @OneToMany(mappedBy = "vehicle")
-    private Set<Dispatch> dispatches;
+    // @OneToMany(mappedBy = "vehicle")
+    // private Set<Dispatch> dispatches;
 
     @OneToMany(mappedBy = "vehicle")
     private Set<VehicleHistory> vehicleHistories;

@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.addiis.core.gestionlogistica.persistence.entities.dispatch.Dispatch;
 import com.addiis.core.gestionlogistica.persistence.entities.warehouse.Store;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -49,8 +50,9 @@ public class OrderStore {
     @Column(name = "total_pallets")
     private Integer totalPallets;
 
-    @OneToMany(mappedBy = "orderStore")
-    private Set<Dispatch> dispatches; 
+    @OneToOne(mappedBy = "orderStore")
+    @JsonManagedReference
+    private Dispatch dispatch;
 
     @PrePersist
     public void prePersist() {

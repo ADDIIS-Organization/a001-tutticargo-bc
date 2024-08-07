@@ -28,13 +28,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/order-stores")
 @RequiredArgsConstructor
 public class OrderStoreController {
-  
+
   @Autowired
   private final OrderStoreService orderStoreService;
 
   @Autowired
   private final OrderPalletsService orderPalletService;
-  
 
   @GetMapping
   public ResponseEntity<Page<OrderStoreResponse>> findAll(int page, int size) {
@@ -51,21 +50,21 @@ public class OrderStoreController {
     return ResponseEntity.ok(orderStoreService.findByStoreCode(storeCode));
   }
 
-   @PatchMapping("/{orderStoreId}/pallets")
-   public ResponseEntity<OrderPalletsResponse> updateByOrderId(
-   @RequestBody OrderPalletRequest request,
-   @PathVariable Long orderStoreId) {
-   // Print the orderId and channelId
-   System.out.println("Order ID: " + orderStoreId);
-   System.out.println("Channel ID: " + request.getChannelId());
-   // Print the details of each pallet
-   for (OrderPalletInfo pallet : request.getOrderPalletsInfo()) {
-   System.out.println("BigPallets: " + pallet.getBigPallets());
-   System.out.println("LittlePallets: " + pallet.getLittlePallets());
-   System.out.println("DispoId: " + pallet.getDispoId());
-   }
-   // Update the order pallets using the service
-   return ResponseEntity.ok(orderPalletService.updateByOrderStoreId(request,
-   orderStoreId));
-   }
+  @PatchMapping("/{orderStoreId}/pallets")
+  public ResponseEntity<OrderPalletsResponse> updateByOrderId(
+      @RequestBody OrderPalletRequest request,
+      @PathVariable Long orderStoreId) {
+    // Print the orderId and channelId
+    System.out.println("Order ID: " + orderStoreId);
+    System.out.println("Channel ID: " + request.getChannelId());
+    // Print the details of each pallet
+    for (OrderPalletInfo pallet : request.getOrderPalletsInfo()) {
+      System.out.println("BigPallets: " + pallet.getBigPallets());
+      System.out.println("LittlePallets: " + pallet.getLittlePallets());
+      System.out.println("DispoId: " + pallet.getDispoId());
+    }
+    // Update the order pallets using the service
+    return ResponseEntity.ok(orderPalletService.updateByOrderStoreId(request,
+        orderStoreId));
+  }
 }

@@ -13,10 +13,24 @@ import org.springframework.data.repository.query.Param;
 import com.addiis.core.gestionlogistica.persistence.entities.order.OrderStore;
 
 public interface OrderStoreRepository extends JpaRepository<OrderStore, Long> {
-  @Query("SELECT o FROM OrderStore o JOIN o.store s JOIN s.route r  WHERE DATE(o.date) = :date ORDER BY r.routeNumber ASC")
-    Page<OrderStore> findAllOrderByRouteNumber(Pageable pageable , @Param("date")  LocalDate date);
+  // @Query("SELECT o FROM OrderStore o JOIN o.store s JOIN s.route r ORDER BY r.routeNumber ASC")
+  // Page<OrderStore> findAllOrderByRouteNumber(Pageable pageable);
 
-     @Query("SELECT o FROM OrderStore o JOIN o.store s WHERE s.code = :storeCode")
-     List<OrderStore> findByStoreCode(@Param("storeCode") Integer storeCode);
+  @Query("SELECT o FROM OrderStore o " +
+      "JOIN o.store s " +
+      "JOIN s.route r " +
+      "JOIN s.channel ch " +
+      "JOIN ch.platform pl " +
+      "LEFT JOIN o.dispatch d " +
+      "WHERE DATE(o.date) = :date " +
+      "ORDER BY r.routeNumber ASC, pl.number ASC")
+  Page<OrderStore> findAllOrderByRouteNumberAndPlatformNumber(Pageable pageable ,@Param("date")  LocalDate date);
+
+  Page<OrderStore> findAll(Pageable pageable);
+
+  @Query("SELECT o FROM OrderStore o JOIN o.store s WHERE s.code = :storeCode")
+  List<OrderStore> findByStoreCode(@Param("storeCode") Integer storeCode);
+
+  
 
 }

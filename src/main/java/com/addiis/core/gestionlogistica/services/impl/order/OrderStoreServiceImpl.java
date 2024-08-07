@@ -22,33 +22,28 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class OrderStoreServiceImpl implements OrderStoreService {
-  
+
   @Autowired
   private final OrderStoreRepository orderStoreRepository;
 
   @Autowired
   private final OrderStoreMapper orderStoreMapper;
-  
-  
+
   @Override
   public OrderStoreResponse create(OrderStore request) {
-    
+
     return null;
   }
 
   @Override
   public void delete(Long id) {
-    
-    
   }
 
   @Override
   public Page<OrderStoreResponse> findAll(int page, int size) {
     if (page < 0) {
       page = 0;
-      
     }
-
     Pageable pageable = PageRequest.of(page - 1, size);
     return this.orderStoreRepository.findAll(pageable).map(orderStoreMapper::toResponse);
   }
@@ -61,33 +56,31 @@ public class OrderStoreServiceImpl implements OrderStoreService {
     }
 
     Pageable pageable = PageRequest.of(page - 1, size);
-    return this.orderStoreRepository.findAllOrderByRouteNumber(pageable, date).map(orderStoreMapper::toResponse);
+    return this.orderStoreRepository.findAllOrderByRouteNumberAndPlatformNumber(pageable, date).map(orderStoreMapper::toResponse);
   }
 
   @Override
-  public List<OrderStoreResponse> findByStoreCode(Integer storeCode) {  
-    return orderStoreRepository.findByStoreCode(storeCode).stream().map(orderStoreMapper::toResponse).collect(Collectors.toList());
+  public List<OrderStoreResponse> findByStoreCode(Integer storeCode) {
+    return orderStoreRepository.findByStoreCode(storeCode).stream().map(orderStoreMapper::toResponse)
+        .collect(Collectors.toList());
   }
 
   @Override
   public OrderStoreResponse findById(Long id) {
-    
+
     return null;
   }
 
   @Override
   public OrderStoreResponse patch(OrderStore request, Long id) {
-    
+
     return null;
   }
 
   @Override
   public OrderStoreResponse update(OrderStore request, Long id) {
-    
+
     return null;
   }
-  
-  
-  
 
 }
