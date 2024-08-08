@@ -54,9 +54,6 @@ public class OrderStore {
     @JsonManagedReference
     private Dispatch dispatch;
 
-    @PrePersist
-    public void prePersist() {
-        date = Timestamp.from(OffsetDateTime.now(ZoneOffset.UTC).toInstant());
-    }
+   
 
 }
