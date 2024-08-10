@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import com.addiis.core.gestionlogistica.utils.enums.Role;
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,9 +18,9 @@ import static com.addiis.core.gestionlogistica.config.Constants.*;
 @Configuration
 public class JWTAuthtenticationConfig {
 
-    public String getJWTToken(String username) {
+    public String getJWTToken(String username, Role role) {
         List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_USER");
+                .commaSeparatedStringToAuthorityList(role.name());
 
         String token = Jwts
                 .builder()

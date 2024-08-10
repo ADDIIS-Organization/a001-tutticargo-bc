@@ -4,51 +4,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.addiis.core.gestionlogistica.utils.enums.Role;
 
 @EnableWebSecurity
 @Configuration
 class WebSecurityConfig {
 
         @Autowired
-        JWTAuthorizationFilter jwtAuthorizationFilter;
+        private AuthenticationProvider authenticationProvider;
+
+        @Autowired
+        private JWTAuthorizationFilter jwtAuthorizationFilter;
+
+        @Autowired
 
         private static final String[] AUTH_WHITELIST = {
 
                         // -- Swagger UI v3 (OpenAPI)
-                        "/api-docs/**",
+                        "/auth/**",
                         "/swagger-ui/**",
-                        "/products/**",
-                        "/reception-scanned-products/**",
-                        "/order-pallets/**",
-                        "/orders/**",
-                        "/stores/**",
-                        "/vehicles/**",
-                        "/drivers/**",
-                        "/dispatches/**",
-                        "/order-stores/**",
+                        "/v3/api-docs/**",
+                        "/v3/api-docs.yaml",
+                        "/swagger-ui.html",
                         // other public endpoints of your API may be appended to this array
         };
 
         @Bean
-        public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-                http
-                                
-                                .csrf(AbstractHttpConfigurer::disable)
-                                .authorizeHttpRequests(authz -> authz
-                                                .requestMatchers(HttpMethod.POST, Constants.LOGIN_URL).permitAll()
-                                                .requestMatchers(AUTH_WHITELIST).permitAll()
+                return http
+                                .csrf(csrf -> csrf.disable()) // Desabilitar protección csrf -> Statelest
+                                .authorizeHttpRequests(authRequest -> authRequest
+
+                                                .requestMatchers(AUTH_WHITELIST).permitAll() // Configurar rutas
+                                                                                             // publicas
                                                 .anyRequest().authenticated())
-                                .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                                .sessionManagement(sessionManager -> sessionManager
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                // Agregarmos el proveedor de autenticación
+                                .authenticationProvider(authenticationProvider)
 
-                return http.build();
+                                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                                .build();
+
         }
 
         @Bean
@@ -57,8 +65,8 @@ class WebSecurityConfig {
                         @Override
                         public void addCorsMappings(CorsRegistry registry) {
                                 registry.addMapping("/**")
-                                .allowedOrigins("*")
-                                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
+                                                .allowedOrigins("*")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH");
                         }
                 };
         }

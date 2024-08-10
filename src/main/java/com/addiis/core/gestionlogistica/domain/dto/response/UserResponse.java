@@ -1,6 +1,5 @@
-package com.addiis.core.gestionlogistica.domain.dto;
+package com.addiis.core.gestionlogistica.domain.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public class UserResponse {
 
-    @JsonIgnore
+    
     private String user;
 
-    @JsonIgnore
-    private String pass;
+
+    private String message;
 
     private String token;
 
