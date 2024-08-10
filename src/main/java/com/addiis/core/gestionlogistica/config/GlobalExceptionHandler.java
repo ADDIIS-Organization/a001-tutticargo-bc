@@ -1,6 +1,7 @@
 package com.addiis.core.gestionlogistica.config;
 
 import java.util.Date;
+import java.lang.NullPointerException;
 
 import org.apache.logging.log4j.core.config.Order;
 import org.apache.velocity.exception.ResourceNotFoundException;
