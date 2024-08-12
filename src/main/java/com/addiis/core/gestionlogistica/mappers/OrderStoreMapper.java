@@ -2,8 +2,10 @@ package com.addiis.core.gestionlogistica.mappers;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,32 +31,48 @@ public class OrderStoreMapper {
 
     // Obtener los pallets actuales
     Set<OrderPallet> ordersPallets = entity.getOrderPallets();
-
     // Si ordersPallets es null o está vacío, inicializa a un conjunto vacío
     if (ordersPallets == null || ordersPallets.isEmpty()) {
-      // Crear un array de pallets predeterminados
-      List<OrderPallet> defaultPallets = new ArrayList<>();
-      for (int i = 1; i <= 13; i++) {
-        OrderPallet pallet = new OrderPallet();
-        pallet.setLittlePallets(0);
-        pallet.setBigPallets(0);
-        pallet.setDispoId(String.valueOf(i));
+      ordersPallets = new LinkedHashSet<>();
+    }
 
-        // Relacionar el pallet con el OrderStore actual
-        pallet.setOrderStore(currentOrderStore);
+    // Crear un conjunto para rastrear las dispoId existentes
+    Set<String> existingDispoIds = ordersPallets.stream()
+        .map(OrderPallet::getDispoId)
+        .collect(Collectors.toSet());
 
-        this.orderPalletsRepository.save(pallet);
+    // Crear una lista de pallets predeterminados
+    List<OrderPallet> defaultPallets = new ArrayList<>();
+    for (int i = 1; i <= 13; i++) {
+      String dispoId = String.valueOf(i);
 
-        // Agregar el pallet a la lista predeterminada
-        defaultPallets.add(pallet);
+      // Si la dispoId ya existe, saltar la creación de este pallet
+      if (existingDispoIds.contains(dispoId)) {
+        continue;
       }
 
-      // Convertir la lista a un conjunto y asignarla a ordersPallets
-      ordersPallets = new HashSet<>(defaultPallets);
+      OrderPallet pallet = new OrderPallet();
+      pallet.setLittlePallets(0);
+      pallet.setBigPallets(0);
+      pallet.setDispoId(dispoId);
 
-      // Finalmente, relacionar los pallets con el OrderStore en ambas direcciones
-      currentOrderStore.setOrderPallets(ordersPallets);
+      // Relacionar el pallet con el OrderStore actual
+      pallet.setOrderStore(currentOrderStore);
+
+      this.orderPalletsRepository.save(pallet);
+
+      // Agregar el pallet a la lista predeterminada
+      defaultPallets.add(pallet);
+
+      // Añadir la dispoId al conjunto de IDs existentes
+      existingDispoIds.add(dispoId);
     }
+
+    // Agregar los nuevos pallets al conjunto ordersPallets existente
+    ordersPallets.addAll(defaultPallets);
+
+    // Finalmente, relacionar los pallets con el OrderStore en ambas direcciones
+    currentOrderStore.setOrderPallets(ordersPallets);
 
     // Calcular bigPallets y littlePallets
     Integer bigPallets = ordersPallets.stream().mapToInt(OrderPallet::getBigPallets).sum();
