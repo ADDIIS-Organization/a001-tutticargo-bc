@@ -37,14 +37,14 @@ public class OrderStoreMapper {
     }
 
     // Crear un conjunto para rastrear las dispoId existentes
-    Set<String> existingDispoIds = ordersPallets.stream()
+    Set<Integer> existingDispoIds = ordersPallets.stream()
         .map(OrderPallet::getDispoId)
         .collect(Collectors.toSet());
 
     // Crear una lista de pallets predeterminados
     List<OrderPallet> defaultPallets = new ArrayList<>();
     for (int i = 1; i <= 13; i++) {
-      String dispoId = String.valueOf(i);
+      Integer dispoId = i;
 
       // Si la dispoId ya existe, saltar la creación de este pallet
       if (existingDispoIds.contains(dispoId)) {

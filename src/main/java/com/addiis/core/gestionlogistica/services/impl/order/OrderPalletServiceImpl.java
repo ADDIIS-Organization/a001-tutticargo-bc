@@ -56,7 +56,7 @@ public class OrderPalletServiceImpl implements OrderPalletsService {
 
     // Iterar sobre los atributos de los pallets en la solicitud
     for (OrderPalletInfo palletInfo : request.getOrderPalletsInfo()) {
-      String palletDispoId = palletInfo.getDispoId().toString();
+      Integer palletDispoId = palletInfo.getDispoId();
       boolean palletFound = false;
 
       for (OrderPallet existingPallet : ordersPallets) {

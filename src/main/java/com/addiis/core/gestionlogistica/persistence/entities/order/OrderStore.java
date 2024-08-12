@@ -13,6 +13,7 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -34,8 +35,10 @@ public class OrderStore {
     @JoinColumn(name = "store_id", referencedColumnName = "id")
     private Store store;
 
-    @OneToMany(mappedBy = "orderStore")
-    private Set<OrderPallet> orderPallets;
+    @OneToMany(mappedBy = "orderStore", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OrderBy("dispoId ASC") 
+    @Builder.Default
+    private Set<OrderPallet> orderPallets = new LinkedHashSet<>();
 
     @CreationTimestamp
     @Column(name = "date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
