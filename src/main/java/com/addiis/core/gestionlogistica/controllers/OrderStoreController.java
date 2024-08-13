@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.addiis.core.gestionlogistica.domain.dto.request.OrderPalletInfo;
@@ -36,18 +38,28 @@ public class OrderStoreController {
   private final OrderPalletsService orderPalletService;
 
   @GetMapping
-  public ResponseEntity<Page<OrderStoreResponse>> findAll(int page, int size) {
+  public ResponseEntity<Page<OrderStoreResponse>> findAll(@RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int size) {
     return ResponseEntity.ok(orderStoreService.findAll(page, size));
   }
 
   @GetMapping("/byDate/{date}")
-  public ResponseEntity<Page<OrderStoreResponse>> findAllOrderByRouteNumber(int page, int size, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+  public ResponseEntity<Page<OrderStoreResponse>> findAllOrderByRouteNumber(@RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int size,
+      @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
     return ResponseEntity.ok(orderStoreService.findAllOrderByRouteNumber(page, size, date));
   }
 
-  @GetMapping("/{storeCode}")
-  public ResponseEntity<List<OrderStoreResponse>> findByStoreCode(@PathVariable Integer storeCode) {
-    return ResponseEntity.ok(orderStoreService.findByStoreCode(storeCode));
+  @GetMapping("/filter/{date}")
+  public ResponseEntity<Page<OrderStoreResponse>> findByStoreCodeOrRouteNumber(
+      @RequestParam(required = false) Integer storeCode,
+      @RequestParam(required = false) String routeNumber,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "10") int size,
+      @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+      ) {
+
+    return ResponseEntity.ok(this.orderStoreService.findByRouteAndStoreCode(page , size, routeNumber, storeCode , date));
   }
 
   @PatchMapping("/{orderStoreId}/pallets")

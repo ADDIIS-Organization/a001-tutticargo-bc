@@ -31,6 +31,25 @@ public interface OrderStoreRepository extends JpaRepository<OrderStore, Long> {
   @Query("SELECT o FROM OrderStore o JOIN o.store s WHERE s.code = :storeCode")
   List<OrderStore> findByStoreCode(@Param("storeCode") Integer storeCode);
 
+  @Query("SELECT o FROM OrderStore o " +
+      "JOIN o.store s " +
+      "JOIN s.route r " +
+      "JOIN s.channel ch " +
+      "JOIN ch.platform pl " +
+      "LEFT JOIN o.dispatch d " +
+      "WHERE (:storeCode IS NULL OR s.code = :storeCode) " +
+      "AND (:routeNumber IS NULL OR r.routeNumber LIKE CONCAT('%', :routeNumber)) " +
+      "AND DATE(o.date) = :date " +
+      "ORDER BY pl.number   ASC")
+  Page<OrderStore> findByStoreCodeOrRouteNumber(
+      Pageable pageable,
+      @Param("storeCode") Integer storeCode,
+      @Param("routeNumber") String routeNumber,
+      @Param("date")  LocalDate date
+      );
+
+  
+
   
 
 }

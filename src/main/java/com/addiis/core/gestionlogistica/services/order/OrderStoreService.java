@@ -15,4 +15,5 @@ public interface OrderStoreService extends CRUDService<OrderStore, OrderStoreRes
   List<OrderStoreResponse> findByStoreCode(Integer storeCode);
 
   Page<OrderStoreResponse> findAllOrderByRouteNumber(int page , int size  , LocalDate date);
+  Page<OrderStoreResponse> findByRouteAndStoreCode(int page , int size ,String route , Integer storeCode , LocalDate date);
 }

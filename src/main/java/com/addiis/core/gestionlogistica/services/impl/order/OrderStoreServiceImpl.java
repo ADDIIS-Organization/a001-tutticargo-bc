@@ -65,6 +65,19 @@ public class OrderStoreServiceImpl implements OrderStoreService {
         .collect(Collectors.toList());
   }
 
+
+
+  @Override
+  public Page<OrderStoreResponse> findByRouteAndStoreCode(int page , int size ,String route , Integer storeCode , LocalDate date) { 
+    if (page < 0) {
+      page = 0;
+      
+    }
+    Pageable pageable = PageRequest.of(page - 1, size);
+    return this.orderStoreRepository.findByStoreCodeOrRouteNumber(pageable, storeCode, route , date).map(orderStoreMapper::toResponse);
+  }
+   
+
   @Override
   public OrderStoreResponse findById(Long id) {
 
